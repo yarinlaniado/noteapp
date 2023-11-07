@@ -1286,3 +1286,10 @@ jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was loo
 07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:45] "[32mPOST /delete/try HTTP/1.1[0m" 302 -
 07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:45] "GET /main HTTP/1.1" 200 -
 07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:51] "[33mGET /read/try HTTP/1.1[0m" 404 -
+07.11.23 14:53 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:53 - [33mPress CTRL+C to quit[0m
+07.11.23 14:53 - 127.0.0.1 - - [07/Nov/2023 14:53:42] "GET /delete/try HTTP/1.1" 200 -
+07.11.23 14:53 - 127.0.0.1 - - [07/Nov/2023 14:53:47] "GET / HTTP/1.1" 200 -
