@@ -1,10 +1,12 @@
+from datetime import datetime
+from pymongo import MongoClient
 from flask import Flask, render_template, request, redirect, url_for, flash
 import logging
 import os
 
 app = Flask(__name__)
 
-# logging?
+# logging
 log_file = 'logs/my_notes_app.log'
 logging.basicConfig(filename=log_file, level=logging.INFO,
                     format='%(asctime)s - %(message)s', datefmt='%d.%m.%y %H:%M')
@@ -13,14 +15,20 @@ logging.basicConfig(filename=log_file, level=logging.INFO,
 # list of existing notes
 def get_existing_notes():
     notes = []
-    for filename in os.listdir('notes'):
-        if filename.endswith('.txt'):
-            with open(os.path.join('notes', filename), 'r') as file:
-                title = filename[:-4]
-                content = file.read()
-                notes.append({'title': title, 'content': content})
+    cursor = collection.find({}, {'_id': 0})  # Exclude _id field from the query result
+    for note in cursor:
+        notes.append({
+            'title': note['title'],
+            'content': note['content'],
+            'created_at': note.get('created_at', 'N/A')  # Use get method to handle missing 'created_at' attribute
+        })
     return notes
 
+
+# MongoDB connection
+client = MongoClient('mongodb://note:note@localhost:27017/')
+db = client['notes_db']
+collection = db['notes_collection']
 
 # main page
 @app.route('/')
@@ -39,6 +47,19 @@ def create():
         if not title:
             flash('please give a title to your note', 'error')
         else:
+            # Get the current date and time
+            current_time = datetime.now()
+
+            # Create a dictionary with note data including title, content, and current time
+            note_data = {
+                'title': title,
+                'content': content,
+                'created_at': current_time
+            }
+
+            # Insert the note data into the MongoDB collection
+            collection.insert_one(note_data)
+
             with open(f'notes/{title}.txt', 'w') as file:
                 file.write(content)
             logging.info(f'note "{title}" was created')
