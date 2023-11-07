@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Update Note - {{ title }}</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block body %}
     <h1>Update Note - {{ title }}</h1>
     <form method="POST">
         <textarea name="content" rows="10" cols="40">{{ content }}</textarea><br>
         <input type="submit" value="Save Changes">
     </form>
     <a href="{{ url_for('main') }}">Back to Main</a>
-</body>
-</html>
+
+{% endblock %}
 

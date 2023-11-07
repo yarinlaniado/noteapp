@@ -240,3 +240,1049 @@ Traceback (most recent call last):
 RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
 07.11.23 12:36 - 127.0.0.1 - - [07/Nov/2023 12:36:17] "[35m[1mPOST /update/a HTTP/1.1[0m" 500 -
 07.11.23 12:36 - 127.0.0.1 - - [07/Nov/2023 12:36:19] "GET / HTTP/1.1" 200 -
+07.11.23 13:06 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:06 - [33mPress CTRL+C to quit[0m
+07.11.23 13:06 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:06 - [33mPress CTRL+C to quit[0m
+07.11.23 13:09 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:09 - [33mPress CTRL+C to quit[0m
+07.11.23 13:10 - 127.0.0.1 - - [07/Nov/2023 13:10:08] "GET / HTTP/1.1" 200 -
+07.11.23 13:10 - 127.0.0.1 - - [07/Nov/2023 13:10:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+07.11.23 13:10 - 127.0.0.1 - - [07/Nov/2023 13:10:17] "GET / HTTP/1.1" 200 -
+07.11.23 13:10 - 127.0.0.1 - - [07/Nov/2023 13:10:33] "GET /update/a HTTP/1.1" 200 -
+07.11.23 13:10 - changes saved to "a"
+07.11.23 13:10 - Exception on /update/a [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 68, in update
+    flash(f'changes saved to "{title}"', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:10 - 127.0.0.1 - - [07/Nov/2023 13:10:38] "[35m[1mPOST /update/a HTTP/1.1[0m" 500 -
+07.11.23 13:10 - 127.0.0.1 - - [07/Nov/2023 13:10:41] "GET /update/a HTTP/1.1" 200 -
+07.11.23 13:16 - 127.0.0.1 - - [07/Nov/2023 13:16:50] "GET /main HTTP/1.1" 200 -
+07.11.23 13:16 - 127.0.0.1 - - [07/Nov/2023 13:16:52] "GET /main HTTP/1.1" 200 -
+07.11.23 13:16 - 127.0.0.1 - - [07/Nov/2023 13:16:57] "GET /main HTTP/1.1" 200 -
+07.11.23 13:20 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:20 - [33mPress CTRL+C to quit[0m
+07.11.23 13:21 - 127.0.0.1 - - [07/Nov/2023 13:21:03] "GET /main HTTP/1.1" 200 -
+07.11.23 13:21 - 127.0.0.1 - - [07/Nov/2023 13:21:15] "GET /read/a HTTP/1.1" 200 -
+07.11.23 13:21 - 127.0.0.1 - - [07/Nov/2023 13:21:20] "GET /main HTTP/1.1" 200 -
+07.11.23 13:28 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:28 - [33mPress CTRL+C to quit[0m
+07.11.23 13:28 - 127.0.0.1 - - [07/Nov/2023 13:28:50] "GET /delete/a HTTP/1.1" 200 -
+07.11.23 13:28 - note "a" was deleted
+07.11.23 13:28 - Exception on /delete/a [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 88, in delete
+    flash(f'note "{title}" was deleted', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:28 - 127.0.0.1 - - [07/Nov/2023 13:28:52] "[35m[1mPOST /delete/a HTTP/1.1[0m" 500 -
+07.11.23 13:28 - Exception on /delete/a [POST]
+Traceback (most recent call last):
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 86, in delete
+    os.remove(f'notes/{title}.txt')
+FileNotFoundError: [Errno 2] No such file or directory: 'notes/a.txt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 91, in delete
+    flash(f'"{title}" not found', 'error')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:28 - 127.0.0.1 - - [07/Nov/2023 13:28:56] "[35m[1mPOST /delete/a HTTP/1.1[0m" 500 -
+07.11.23 13:28 - 127.0.0.1 - - [07/Nov/2023 13:28:58] "[33mGET /delete/ HTTP/1.1[0m" 404 -
+07.11.23 13:29 - 127.0.0.1 - - [07/Nov/2023 13:29:12] "GET /delete/<title> HTTP/1.1" 200 -
+07.11.23 13:29 - Exception on /delete/<title> [POST]
+Traceback (most recent call last):
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 86, in delete
+    os.remove(f'notes/{title}.txt')
+FileNotFoundError: [Errno 2] No such file or directory: 'notes/<title>.txt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 91, in delete
+    flash(f'"{title}" not found', 'error')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:29 - 127.0.0.1 - - [07/Nov/2023 13:29:16] "[35m[1mPOST /delete/<title> HTTP/1.1[0m" 500 -
+07.11.23 13:41 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:41 - [33mPress CTRL+C to quit[0m
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:24] "GET / HTTP/1.1" 200 -
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:26] "GET /create HTTP/1.1" 200 -
+07.11.23 13:43 - note "Dashboard - basic" was created
+07.11.23 13:43 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 45, in create
+    flash(f'"{title}" was created', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:31] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:33] "GET /create HTTP/1.1" 200 -
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:33] "GET /create HTTP/1.1" 200 -
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:36] "GET / HTTP/1.1" 200 -
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:37] "GET / HTTP/1.1" 200 -
+07.11.23 13:43 - 127.0.0.1 - - [07/Nov/2023 13:43:51] "GET /create HTTP/1.1" 200 -
+07.11.23 13:43 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+07.11.23 13:43 - [33mPress CTRL+C to quit[0m
+07.11.23 13:44 - 127.0.0.1 - - [07/Nov/2023 13:44:06] "GET /create HTTP/1.1" 200 -
+07.11.23 13:44 - note "test" was created
+07.11.23 13:44 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 45, in create
+    flash(f'"{title}" was created', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:44 - 127.0.0.1 - - [07/Nov/2023 13:44:31] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 13:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:46 - [33mPress CTRL+C to quit[0m
+07.11.23 13:46 - note "test" was created
+07.11.23 13:46 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 45, in create
+    flash(f'"{title}" was created', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:04] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:05] "GET /create HTTP/1.1" 200 -
+07.11.23 13:46 - note "test" was created
+07.11.23 13:46 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 45, in create
+    flash(f'"{title}" was created', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:06] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:07] "GET /create HTTP/1.1" 200 -
+07.11.23 13:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:46 - [33mPress CTRL+C to quit[0m
+07.11.23 13:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:46 - [33mPress CTRL+C to quit[0m
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:41] "GET / HTTP/1.1" 200 -
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:47] "GET /read/Dashboard%20-%20basic HTTP/1.1" 200 -
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:51] "GET /read/Dashboard%20-%20basic HTTP/1.1" 200 -
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:53] "GET /delete/Dashboard%20-%20basic HTTP/1.1" 200 -
+07.11.23 13:46 - 127.0.0.1 - - [07/Nov/2023 13:46:56] "GET /update/Dashboard%20-%20basic HTTP/1.1" 200 -
+07.11.23 13:47 - 127.0.0.1 - - [07/Nov/2023 13:47:20] "GET /create HTTP/1.1" 200 -
+07.11.23 13:47 - note "test" was created
+07.11.23 13:47 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:47 - [33mPress CTRL+C to quit[0m
+07.11.23 13:47 - 127.0.0.1 - - [07/Nov/2023 13:47:58] "GET / HTTP/1.1" 200 -
+07.11.23 13:48 - note "test" was created
+07.11.23 13:48 - 127.0.0.1 - - [07/Nov/2023 13:48:06] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 13:48 - 127.0.0.1 - - [07/Nov/2023 13:48:06] "GET /create HTTP/1.1" 200 -
+07.11.23 13:48 - note "hdfhfghfg" was created
+07.11.23 13:48 - 127.0.0.1 - - [07/Nov/2023 13:48:13] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 13:48 - 127.0.0.1 - - [07/Nov/2023 13:48:13] "[33mGET /0.0.0.0:5000 HTTP/1.1[0m" 404 -
+07.11.23 13:48 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:48 - [33mPress CTRL+C to quit[0m
+07.11.23 13:48 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:48 - [33mPress CTRL+C to quit[0m
+07.11.23 13:48 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:48 - [33mPress CTRL+C to quit[0m
+07.11.23 13:48 - 127.0.0.1 - - [07/Nov/2023 13:48:33] "GET / HTTP/1.1" 200 -
+07.11.23 13:49 - 127.0.0.1 - - [07/Nov/2023 13:49:35] "GET /create HTTP/1.1" 200 -
+07.11.23 13:49 - note "test" was created
+07.11.23 13:49 - 127.0.0.1 - - [07/Nov/2023 13:49:48] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 13:49 - 127.0.0.1 - - [07/Nov/2023 13:49:48] "GET / HTTP/1.1" 200 -
+07.11.23 13:49 - 127.0.0.1 - - [07/Nov/2023 13:49:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+07.11.23 13:49 - 127.0.0.1 - - [07/Nov/2023 13:49:52] "GET / HTTP/1.1" 200 -
+07.11.23 13:49 - 127.0.0.1 - - [07/Nov/2023 13:49:53] "GET / HTTP/1.1" 200 -
+07.11.23 13:50 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:50 - [33mPress CTRL+C to quit[0m
+07.11.23 13:50 - 127.0.0.1 - - [07/Nov/2023 13:50:22] "GET /main HTTP/1.1" 200 -
+07.11.23 13:50 - 127.0.0.1 - - [07/Nov/2023 13:50:23] "GET /update/hdfhfghfg HTTP/1.1" 200 -
+07.11.23 13:50 - changes saved to "hdfhfghfg"
+07.11.23 13:50 - Exception on /update/hdfhfghfg [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 73, in update
+    flash(f'changes saved to "{title}"', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:50 - 127.0.0.1 - - [07/Nov/2023 13:50:25] "[35m[1mPOST /update/hdfhfghfg HTTP/1.1[0m" 500 -
+07.11.23 13:50 - 127.0.0.1 - - [07/Nov/2023 13:50:30] "GET /update/hdfhfghfg HTTP/1.1" 200 -
+07.11.23 13:50 - 127.0.0.1 - - [07/Nov/2023 13:50:32] "GET /create HTTP/1.1" 200 -
+07.11.23 13:50 - note "gwgwgwgw" was created
+07.11.23 13:50 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 45, in create
+    flash(f'"{title}" was created', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:50 - 127.0.0.1 - - [07/Nov/2023 13:50:37] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 13:51 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:51 - [33mPress CTRL+C to quit[0m
+07.11.23 13:51 - 127.0.0.1 - - [07/Nov/2023 13:51:20] "GET / HTTP/1.1" 200 -
+07.11.23 13:51 - 127.0.0.1 - - [07/Nov/2023 13:51:24] "GET / HTTP/1.1" 200 -
+07.11.23 13:51 - 127.0.0.1 - - [07/Nov/2023 13:51:24] "GET / HTTP/1.1" 200 -
+07.11.23 13:51 - 127.0.0.1 - - [07/Nov/2023 13:51:28] "GET /create HTTP/1.1" 200 -
+07.11.23 13:51 - note "testing" was created
+07.11.23 13:52 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:52 - [33mPress CTRL+C to quit[0m
+07.11.23 13:52 - note "testing" was created
+07.11.23 13:52 - 127.0.0.1 - - [07/Nov/2023 13:52:11] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 13:52 - 127.0.0.1 - - [07/Nov/2023 13:52:11] "GET / HTTP/1.1" 200 -
+07.11.23 13:52 - 127.0.0.1 - - [07/Nov/2023 13:52:14] "GET /create HTTP/1.1" 200 -
+07.11.23 13:52 - note "testing" was created
+07.11.23 13:52 - 127.0.0.1 - - [07/Nov/2023 13:52:19] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 13:52 - 127.0.0.1 - - [07/Nov/2023 13:52:19] "GET / HTTP/1.1" 200 -
+07.11.23 13:54 - 127.0.0.1 - - [07/Nov/2023 13:54:15] "GET /read/testing HTTP/1.1" 200 -
+07.11.23 13:54 - 127.0.0.1 - - [07/Nov/2023 13:54:16] "GET /main HTTP/1.1" 200 -
+07.11.23 13:54 - 127.0.0.1 - - [07/Nov/2023 13:54:17] "GET /update/testing HTTP/1.1" 200 -
+07.11.23 13:54 - changes saved to "testing"
+07.11.23 13:54 - Exception on /update/testing [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 73, in update
+    #flash(f'changes saved to "{title}"', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:54 - 127.0.0.1 - - [07/Nov/2023 13:54:19] "[35m[1mPOST /update/testing HTTP/1.1[0m" 500 -
+07.11.23 13:54 - 127.0.0.1 - - [07/Nov/2023 13:54:20] "GET /update/testing HTTP/1.1" 200 -
+07.11.23 13:55 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 13:55 - [33mPress CTRL+C to quit[0m
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:03] "GET /update/hdfhfghfg HTTP/1.1" 200 -
+07.11.23 13:55 - changes saved to "hdfhfghfg"
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:05] "[32mPOST /update/hdfhfghfg HTTP/1.1[0m" 302 -
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:05] "GET /main HTTP/1.1" 200 -
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:06] "GET /update/hdfhfghfg HTTP/1.1" 200 -
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:07] "GET /main HTTP/1.1" 200 -
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:09] "GET /delete/testing HTTP/1.1" 200 -
+07.11.23 13:55 - note "testing" was deleted
+07.11.23 13:55 - Exception on /delete/testing [POST]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 88, in delete
+    flash(f'note "{title}" was deleted', 'success')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/helpers.py", line 328, in flash
+    session["_flashes"] = flashes
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/sessions.py", line 97, in _fail
+    raise RuntimeError(
+RuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:10] "[35m[1mPOST /delete/testing HTTP/1.1[0m" 500 -
+07.11.23 13:55 - 127.0.0.1 - - [07/Nov/2023 13:55:13] "GET /delete/testing HTTP/1.1" 200 -
+07.11.23 14:27 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:27 - [33mPress CTRL+C to quit[0m
+07.11.23 14:27 - 127.0.0.1 - - [07/Nov/2023 14:27:43] "GET / HTTP/1.1" 200 -
+07.11.23 14:27 - Exception on /create [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 48, in create
+    return render_template('create.html')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/create.html", line 31, in template
+    {% endwith %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:27 - 127.0.0.1 - - [07/Nov/2023 14:27:44] "[35m[1mGET /create HTTP/1.1[0m" 500 -
+07.11.23 14:28 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:28 - [33mPress CTRL+C to quit[0m
+07.11.23 14:28 - Exception on /create [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 48, in create
+    return render_template('create.html')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/create.html", line 31, in template
+    {% endwith %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:28 - 127.0.0.1 - - [07/Nov/2023 14:28:07] "[35m[1mGET /create HTTP/1.1[0m" 500 -
+07.11.23 14:28 - Exception on /create [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 48, in create
+    return render_template('create.html')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/create.html", line 31, in template
+    {% endwith %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:28 - 127.0.0.1 - - [07/Nov/2023 14:28:10] "[35m[1mGET /create HTTP/1.1[0m" 500 -
+07.11.23 14:28 - 127.0.0.1 - - [07/Nov/2023 14:28:12] "GET / HTTP/1.1" 200 -
+07.11.23 14:28 - Exception on /create [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 48, in create
+    return render_template('create.html')
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/create.html", line 31, in template
+    {% endwith %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:28 - 127.0.0.1 - - [07/Nov/2023 14:28:17] "[35m[1mGET /create HTTP/1.1[0m" 500 -
+07.11.23 14:28 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:28 - [33mPress CTRL+C to quit[0m
+07.11.23 14:28 - 127.0.0.1 - - [07/Nov/2023 14:28:38] "GET /create HTTP/1.1" 200 -
+07.11.23 14:29 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:29 - [33mPress CTRL+C to quit[0m
+07.11.23 14:29 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:29 - [33mPress CTRL+C to quit[0m
+07.11.23 14:29 - 127.0.0.1 - - [07/Nov/2023 14:29:45] "GET /create HTTP/1.1" 200 -
+07.11.23 14:30 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:30 - [33mPress CTRL+C to quit[0m
+07.11.23 14:30 - 127.0.0.1 - - [07/Nov/2023 14:30:31] "GET /create HTTP/1.1" 200 -
+07.11.23 14:30 - note "gwgwgwgw" was created
+07.11.23 14:32 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:32 - [33mPress CTRL+C to quit[0m
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:18] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:21] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:21] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:21] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:22] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:22] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:32 - [33mPress CTRL+C to quit[0m
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:32] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:33] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:32 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+    return render_template('main.html', notes=notes)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:32 - 127.0.0.1 - - [07/Nov/2023 14:32:33] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:33 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:13] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:33 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/yarin/Desktop/Projects/noteapp/app/app.py", line 31, in main
+  File "/home/yarin/.local/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/yarin/.local/lib/python3.10/site-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/yarin/Desktop/Projects/noteapp/app/templates/main.html", line 43, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:13] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:33 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:33 - [33mPress CTRL+C to quit[0m
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:40] "GET / HTTP/1.1" 200 -
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:42] "GET /create HTTP/1.1" 200 -
+07.11.23 14:33 - note "Dashboard" was created
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:49] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:49] "GET / HTTP/1.1" 200 -
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:50] "GET /update/Dashboard HTTP/1.1" 200 -
+07.11.23 14:33 - changes saved to "Dashboard"
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:55] "[32mPOST /update/Dashboard HTTP/1.1[0m" 302 -
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:55] "GET /main HTTP/1.1" 200 -
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:58] "GET /delete/Dashboard HTTP/1.1" 200 -
+07.11.23 14:33 - note "Dashboard" was deleted
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:59] "[32mPOST /delete/Dashboard HTTP/1.1[0m" 302 -
+07.11.23 14:33 - 127.0.0.1 - - [07/Nov/2023 14:33:59] "GET /main HTTP/1.1" 200 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:01] "GET /delete/Dashboard%20-%20basic HTTP/1.1" 200 -
+07.11.23 14:34 - note "Dashboard - basic" was deleted
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:02] "[32mPOST /delete/Dashboard%20-%20basic HTTP/1.1[0m" 302 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:02] "GET /main HTTP/1.1" 200 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:08] "GET /create HTTP/1.1" 200 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:35] "GET /main HTTP/1.1" 200 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:35] "GET /delete/hdfhfghfg HTTP/1.1" 200 -
+07.11.23 14:34 - note "hdfhfghfg" was deleted
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:36] "[32mPOST /delete/hdfhfghfg HTTP/1.1[0m" 302 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:36] "GET /main HTTP/1.1" 200 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:37] "GET /delete/test HTTP/1.1" 200 -
+07.11.23 14:34 - note "test" was deleted
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:38] "[32mPOST /delete/test HTTP/1.1[0m" 302 -
+07.11.23 14:34 - 127.0.0.1 - - [07/Nov/2023 14:34:38] "GET /main HTTP/1.1" 200 -
+07.11.23 14:35 - 127.0.0.1 - - [07/Nov/2023 14:35:43] "GET /update/gwgwgwgw HTTP/1.1" 200 -
+07.11.23 14:42 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:42 - [33mPress CTRL+C to quit[0m
+07.11.23 14:42 - 127.0.0.1 - - [07/Nov/2023 14:42:05] "GET /main HTTP/1.1" 200 -
+07.11.23 14:42 - 127.0.0.1 - - [07/Nov/2023 14:42:05] "GET /main HTTP/1.1" 200 -
+07.11.23 14:42 - 127.0.0.1 - - [07/Nov/2023 14:42:06] "GET /main HTTP/1.1" 200 -
+07.11.23 14:42 - 127.0.0.1 - - [07/Nov/2023 14:42:06] "GET /main HTTP/1.1" 200 -
+07.11.23 14:42 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:42 - [33mPress CTRL+C to quit[0m
+07.11.23 14:42 - 127.0.0.1 - - [07/Nov/2023 14:42:19] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:44 - [33mPress CTRL+C to quit[0m
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:32] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:33] "GET /read/gwgwgwgw HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:35] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:36] "GET /update/gwgwgwgw HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:38] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:39] "GET /delete/gwgwgwgw HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:42] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:43] "GET /delete/gwgwgwgw HTTP/1.1" 200 -
+07.11.23 14:44 - note "gwgwgwgw" was deleted
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:43] "[32mPOST /delete/gwgwgwgw HTTP/1.1[0m" 302 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:43] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:46] "GET /create HTTP/1.1" 200 -
+07.11.23 14:44 - note "testing" was created
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:51] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:51] "GET / HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:52] "GET /delete/testing HTTP/1.1" 200 -
+07.11.23 14:44 - note "testing" was deleted
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:53] "[32mPOST /delete/testing HTTP/1.1[0m" 302 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:53] "GET /main HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:53] "GET /create HTTP/1.1" 200 -
+07.11.23 14:44 - note "sdf" was created
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:55] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:55] "GET / HTTP/1.1" 200 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:56] "GET /update/sdf HTTP/1.1" 200 -
+07.11.23 14:44 - changes saved to "sdf"
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:57] "[32mPOST /update/sdf HTTP/1.1[0m" 302 -
+07.11.23 14:44 - 127.0.0.1 - - [07/Nov/2023 14:44:57] "GET /main HTTP/1.1" 200 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:04] "[33mGET /lalalala HTTP/1.1[0m" 404 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:08] "GET /create HTTP/1.1" 200 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:16] "[32mGET /update/sfgdfgfdg HTTP/1.1[0m" 302 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:16] "GET / HTTP/1.1" 200 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:28] "[32mGET /read/dfgdfgd HTTP/1.1[0m" 302 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:29] "GET / HTTP/1.1" 200 -
+07.11.23 14:45 - 127.0.0.1 - - [07/Nov/2023 14:45:55] "[33mGET /error HTTP/1.1[0m" 404 -
+07.11.23 14:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:46 - [33mPress CTRL+C to quit[0m
+07.11.23 14:46 - 127.0.0.1 - - [07/Nov/2023 14:46:15] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:46 - [33mPress CTRL+C to quit[0m
+07.11.23 14:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:46 - [33mPress CTRL+C to quit[0m
+07.11.23 14:46 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:46 - [33mPress CTRL+C to quit[0m
+07.11.23 14:46 - 127.0.0.1 - - [07/Nov/2023 14:46:34] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:46 - 127.0.0.1 - - [07/Nov/2023 14:46:35] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:46 - 127.0.0.1 - - [07/Nov/2023 14:46:36] "GET / HTTP/1.1" 200 -
+07.11.23 14:46 - 127.0.0.1 - - [07/Nov/2023 14:46:59] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:46 - 127.0.0.1 - - [07/Nov/2023 14:46:59] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:47 - 127.0.0.1 - - [07/Nov/2023 14:47:00] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:47 - 127.0.0.1 - - [07/Nov/2023 14:47:00] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:47 - 127.0.0.1 - - [07/Nov/2023 14:47:00] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:47 - 127.0.0.1 - - [07/Nov/2023 14:47:02] "GET / HTTP/1.1" 200 -
+07.11.23 14:48 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:48 - [33mPress CTRL+C to quit[0m
+07.11.23 14:48 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:48 - [33mPress CTRL+C to quit[0m
+07.11.23 14:48 - 127.0.0.1 - - [07/Nov/2023 14:48:39] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:48 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:48 - [33mPress CTRL+C to quit[0m
+07.11.23 14:48 - 127.0.0.1 - - [07/Nov/2023 14:48:57] "[33mGET /read/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:49 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.100.102.17:5000
+07.11.23 14:49 - [33mPress CTRL+C to quit[0m
+07.11.23 14:49 - 127.0.0.1 - - [07/Nov/2023 14:49:40] "[33mGET /update/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:49 - 127.0.0.1 - - [07/Nov/2023 14:49:46] "[33mGET /create/sdfgsfdg HTTP/1.1[0m" 404 -
+07.11.23 14:49 - 127.0.0.1 - - [07/Nov/2023 14:49:54] "[33mGET /create/ HTTP/1.1[0m" 404 -
+07.11.23 14:49 - 127.0.0.1 - - [07/Nov/2023 14:49:59] "GET / HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:00] "GET /create HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:04] "GET /main HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:08] "GET /create HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:12] "[33mGET /create/ HTTP/1.1[0m" 404 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:16] "GET /create HTTP/1.1" 200 -
+07.11.23 14:50 - note "try" was created
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:24] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:24] "GET / HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:33] "GET /read/try HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:37] "GET /update/try HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:38] "GET /main HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:39] "GET /delete/try HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:41] "GET /update/try HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:43] "GET /read/try HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:45] "GET /delete/try HTTP/1.1" 200 -
+07.11.23 14:50 - note "try" was deleted
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:45] "[32mPOST /delete/try HTTP/1.1[0m" 302 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:45] "GET /main HTTP/1.1" 200 -
+07.11.23 14:50 - 127.0.0.1 - - [07/Nov/2023 14:50:51] "[33mGET /read/try HTTP/1.1[0m" 404 -

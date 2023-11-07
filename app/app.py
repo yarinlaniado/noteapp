@@ -4,12 +4,13 @@ import os
 
 app = Flask(__name__)
 
-#logging?
+# logging?
 log_file = 'logs/my_notes_app.log'
 logging.basicConfig(filename=log_file, level=logging.INFO,
                     format='%(asctime)s - %(message)s', datefmt='%d.%m.%y %H:%M')
 
-#list of existing notes
+
+# list of existing notes
 def get_existing_notes():
     notes = []
     for filename in os.listdir('notes'):
@@ -20,14 +21,16 @@ def get_existing_notes():
                 notes.append({'title': title, 'content': content})
     return notes
 
-#main page
+
+# main page
 @app.route('/')
 @app.route('/main')
 def main():
     notes = get_existing_notes()
     return render_template('main.html', notes=notes)
 
-#create route+fun
+
+# create route+fun
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
@@ -39,11 +42,11 @@ def create():
             with open(f'notes/{title}.txt', 'w') as file:
                 file.write(content)
             logging.info(f'note "{title}" was created')
-            flash(f'"{title}" was created', 'success')
-            return redirect(url_for('main'))
+            return redirect("/", code=302)
     return render_template('create.html')
 
-#read route+fun
+
+# read route+fun
 @app.route('/read/<title>')
 def read(title):
     try:
@@ -51,10 +54,10 @@ def read(title):
             content = file.read()
         return render_template('read.html', title=title, content=content)
     except FileNotFoundError:
-        flash(f'"{title}" not found', 'error')
-        return redirect(url_for('main'))
+        return page_not_found("Note not found")
 
-#update route+fun
+
+# update route+fun
 @app.route('/update/<title>', methods=['GET', 'POST'])
 def update(title):
     try:
@@ -65,31 +68,30 @@ def update(title):
             with open(f'notes/{title}.txt', 'w') as file:
                 file.write(new_content)
             logging.info(f'changes saved to "{title}"')
-            flash(f'changes saved to "{title}"', 'success')
             return redirect(url_for('main'))
         return render_template('update.html', title=title, content=content)
     except FileNotFoundError:
-        flash(f'"{title}" not found', 'error')
-        return redirect(url_for('main'))
+        return page_not_found("Note not found")
 
-#delete route+fun
+
+# delete route+fun
 @app.route('/delete/<title>', methods=['GET', 'POST'])
 def delete(title):
     if request.method == 'POST':
         try:
             os.remove(f'notes/{title}.txt')
             logging.info(f'note "{title}" was deleted')
-            flash(f'note "{title}" was deleted', 'success')
             return redirect(url_for('main'))
         except FileNotFoundError:
-            flash(f'"{title}" not found', 'error')
-            return redirect(url_for('main'))
+            return page_not_found("Note not found")
     return render_template('delete.html', title=title)
 
-#errors
+
+# errors
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('error.html', error_message='Page not found'), 404
+    return render_template('error.html', error_message=error), 404
+
 
 @app.errorhandler(500)
 def internal_server_error(error):
@@ -97,4 +99,5 @@ def internal_server_error(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

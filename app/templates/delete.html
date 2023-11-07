@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Delete Note - {{ title }}</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block body %}
     <h1>Delete Note - {{ title }}</h1>
     <p>Are you sure you want to delete this note?</p>
     <form method="POST">
         <input type="submit" value="Delete">
     </form>
     <a href="{{ url_for('main') }}">Cancel and Back to Main</a>
-</body>
-</html>
+{% endblock %}
 
