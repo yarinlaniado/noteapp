@@ -96,12 +96,18 @@ def update(title):
 
 
 # delete route+fun
-@app.route('/delete/<title>', methods=['GET', 'POST'])
+@app.route('/delete/<title>', methods=['GET','POST'])
 def delete(title):
     if request.method == 'POST':
+
         try:
             os.remove(f'notes/{title}.txt')
-            logging.info(f'note "{title}" was deleted')
+            # Delete the note from the MongoDB collection using the title as a filter
+            result = collection.delete_one({'title': title})
+            if result.deleted_count == 1:
+                logging.info(f'Note "{title}" was deleted from the database')
+            else:
+                logging.warning(f'Note "{title}" not found in the database')
             return redirect(url_for('main'))
         except FileNotFoundError:
             return page_not_found("Note not found")
