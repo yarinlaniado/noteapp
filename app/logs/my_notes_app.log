@@ -1293,3 +1293,155 @@ jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was loo
 07.11.23 14:53 - [33mPress CTRL+C to quit[0m
 07.11.23 14:53 - 127.0.0.1 - - [07/Nov/2023 14:53:42] "GET /delete/try HTTP/1.1" 200 -
 07.11.23 14:53 - 127.0.0.1 - - [07/Nov/2023 14:53:47] "GET / HTTP/1.1" 200 -
+07.11.23 14:59 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.6:5000
+07.11.23 14:59 - [33mPress CTRL+C to quit[0m
+07.11.23 14:59 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 29, in main
+    notes = get_existing_notes()
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 16, in get_existing_notes
+    for filename in os.listdir('notes'):
+FileNotFoundError: [Errno 2] No such file or directory: 'notes'
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:39] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:42] "GET /create HTTP/1.1" 200 -
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:43] "GET /create HTTP/1.1" 200 -
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:44] "GET /create HTTP/1.1" 200 -
+07.11.23 14:59 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 42, in create
+    with open(f'notes/{title}.txt', 'w') as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'notes/a.txt'
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:47] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:48] "GET /create HTTP/1.1" 200 -
+07.11.23 14:59 - 127.0.0.1 - - [07/Nov/2023 14:59:49] "GET /create HTTP/1.1" 200 -
+07.11.23 15:02 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.6:5000
+07.11.23 15:02 - [33mPress CTRL+C to quit[0m
+07.11.23 15:02 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 29, in main
+    notes = get_existing_notes()
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 16, in get_existing_notes
+    for filename in os.listdir('notes'):
+FileNotFoundError: [Errno 2] No such file or directory: 'notes'
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:26] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 15:02 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 29, in main
+    notes = get_existing_notes()
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 16, in get_existing_notes
+    for filename in os.listdir('notes'):
+FileNotFoundError: [Errno 2] No such file or directory: 'notes'
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:28] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 15:02 - Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 29, in main
+    notes = get_existing_notes()
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 16, in get_existing_notes
+    for filename in os.listdir('notes'):
+FileNotFoundError: [Errno 2] No such file or directory: 'notes'
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:28] "[35m[1mGET / HTTP/1.1[0m" 500 -
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:29] "GET /create HTTP/1.1" 200 -
+07.11.23 15:02 - Exception on /main [GET]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 29, in main
+    notes = get_existing_notes()
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 16, in get_existing_notes
+    for filename in os.listdir('notes'):
+FileNotFoundError: [Errno 2] No such file or directory: 'notes'
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:34] "[35m[1mGET /main HTTP/1.1[0m" 500 -
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:38] "GET /create HTTP/1.1" 200 -
+07.11.23 15:02 - Exception on /create [POST]
+Traceback (most recent call last):
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/user/.local/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/user/limudim/note-app/noteapp/app/app.py", line 42, in create
+    with open(f'notes/{title}.txt', 'w') as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'notes/a.txt'
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:44] "[35m[1mPOST /create HTTP/1.1[0m" 500 -
+07.11.23 15:02 - 127.0.0.1 - - [07/Nov/2023 15:02:50] "[33mGET /read/a HTTP/1.1[0m" 404 -
+07.11.23 15:04 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.6:5000
+07.11.23 15:04 - [33mPress CTRL+C to quit[0m
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:21] "GET / HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:25] "GET /create HTTP/1.1" 200 -
+07.11.23 15:04 - note "a" was created
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:28] "[32mPOST /create HTTP/1.1[0m" 302 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:28] "GET / HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:29] "GET /update/a HTTP/1.1" 200 -
+07.11.23 15:04 - changes saved to "a"
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:32] "[32mPOST /update/a HTTP/1.1[0m" 302 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:32] "GET /main HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:34] "GET /update/a HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:37] "GET /main HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:39] "GET /main HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:40] "GET /read/a HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:42] "GET /read/a HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:43] "GET /delete/a HTTP/1.1" 200 -
+07.11.23 15:04 - note "a" was deleted
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:44] "[32mPOST /delete/a HTTP/1.1[0m" 302 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:44] "GET /main HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:48] "[33mGET /read/a HTTP/1.1[0m" 404 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:51] "GET /create HTTP/1.1" 200 -
+07.11.23 15:04 - 127.0.0.1 - - [07/Nov/2023 15:04:53] "GET /main HTTP/1.1" 200 -
