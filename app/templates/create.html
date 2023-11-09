@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create a New Note</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block body %}
+
     <h1>Create a New Note</h1>
     <a href="{{ url_for('main') }}">Back to Notes</a>
     <form method="POST">
@@ -24,6 +21,5 @@
             {% endif %}
         {% endwith %}
     </div>
-</body>
-</html>
+{% endblock %}
 

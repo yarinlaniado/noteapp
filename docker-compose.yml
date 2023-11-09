@@ -1,0 +1,22 @@
+#mongodb://note:note@localhost:27017
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    container_name: my-mongodb-container
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: note
+      MONGO_INITDB_ROOT_PASSWORD: note
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - my-network
+
+volumes:
+  mongodb-data:
+
+networks:
+  my-network:
+    driver: bridge

@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Notes App</title>
-    <!-- Include Bootstrap via a Content Delivery Network (CDN) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <header class="bg-primary text-white p-4">
-        <div class="container">
-            <h1>Notes</h1>
-            <a href="{{ url_for('create') }}" class="btn btn-success">Create a New Note</a>
-        </div>
-    </header>
-
+{% extends "layout.html" %}
+{% block body %}
     <div class="container mt-4">
         <div class="row">
             <div class="col">
@@ -23,10 +10,12 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ note.title }}</h5>
                                     <p class="card-text">{{ note.content }}</p>
+                                    <p class="card-text">ID: {{ note['_id'] }}</p>
+                                    <p class="card-text">Created At: {{ note.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
                                     <div class="text-center">
-                                        <a href="{{ url_for('read', title=note.title) }}" class="btn btn-secondary mr-2">View</a>
-                                        <a href="{{ url_for('update', title=note.title) }}" class="btn btn-warning mr-2">Edit</a>
-                                        <a href="{{ url_for('delete', title=note.title) }}" class="btn btn-danger">Delete</a>
+                                        <a href="{{ url_for('read', id=note['_id']) }}" class="btn btn-secondary mr-2">View</a>
+                                        <a href="{{ url_for('update', id=note['_id']) }}" class="btn btn-warning mr-2">Edit</a>
+                                        <a href="{{ url_for('delete', id=note['_id']) }}" class="btn btn-danger">Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -38,10 +27,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Include Bootstrap JavaScript (optional) -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-
+{% endblock %}
