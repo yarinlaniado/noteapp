@@ -1,6 +1,16 @@
 #mongodb://note:note@localhost:27017
 version: '3'
 services:
+  app:
+    build:
+      context: .
+    image: note-app
+    ports:
+      - "8080:8000"
+    depends_on:
+      - mongodb
+    links:
+      - mongodb 
   mongodb:
     image: mongo
     container_name: my-mongodb-container
@@ -11,12 +21,5 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: note
     volumes:
       - mongodb-data:/data/db
-    networks:
-      - my-network
-
 volumes:
   mongodb-data:
-
-networks:
-  my-network:
-    driver: bridge
