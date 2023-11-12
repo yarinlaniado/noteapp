@@ -1,0 +1,129 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-data
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/path/to/host/storage" # replace with the actual path on the host
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: logs
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: "/path/to/nfs" # replace with the actual NFS path
+    server: "nfs-server-ip" # replace with the actual NFS server IP
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: "note"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: "note"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: note-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: note-app
+  template:
+    metadata:
+      labels:
+        app: note-app
+    spec:
+      containers:
+      - name: note-app
+        image: note-app
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: logs
+          mountPath: /Noteapp/app/logs
+        env:
+        - name: MONGO_URI
+          value: "mongodb://note:note@mongodb:27017"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: note-app
+spec:
+  selector:
+    app: note-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8000
