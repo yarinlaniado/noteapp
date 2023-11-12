@@ -23,7 +23,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: note
     volumes:
       - mongodb-data:/data/db
-  filebeat:
+  filebeat: # Adding filebeat for ELK
     build:
       context: ./elk/filebeat
     volumes:
@@ -33,7 +33,7 @@ services:
     
 volumes:
   mongodb-data:
-  logs:
+  logs: #logs nfs - storage for both us and filebeat
     driver: local
     driver_opts:
       type: 'none'

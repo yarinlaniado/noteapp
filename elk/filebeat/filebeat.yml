@@ -5,7 +5,7 @@ filebeat.inputs:
     - /logs/my_notes_app.log
 
 output.logstash:
-  hosts: ["0.0.0.0:5044"] # <-- the ELK instance private ip, 5044 = Logstash Filebeat input
+  hosts: ["172.17.0.1:5044"] # <-- the ELK instance private ip, 5044 = Logstash Filebeat input -> my pc address
 
 logging.level: info
 logging.to_files: true
