@@ -29,7 +29,7 @@ def get_existing_notes():
 
 
 # MongoDB connection
-client = MongoClient('mongodb://note:note@localhost:27017/')
+client = MongoClient('mongodb://note:note@mongodb:27017/')
 db = client['notes_db']
 collection = db['notes_collection']
 
@@ -168,5 +168,5 @@ def internal_server_error(error):
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get('PORT', 8000))
+    app.run(host='0.0.0.0', port=port,debug=True)
