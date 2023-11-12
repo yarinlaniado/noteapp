@@ -11,6 +11,8 @@ services:
       - mongodb
     links:
       - mongodb 
+    volumes:
+      - logs:/Noteapp/app/logs
   mongodb:
     image: mongo
     container_name: my-mongodb-container
@@ -21,5 +23,20 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: note
     volumes:
       - mongodb-data:/data/db
+  filebeat:
+    build:
+      context: ./elk/filebeat
+    volumes:
+      - logs:/logs
+    restart: always
+
+    
 volumes:
   mongodb-data:
+  logs:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'nfs'
+      device: ./elk/logs
+

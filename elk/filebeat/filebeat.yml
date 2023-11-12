@@ -1,0 +1,13 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /logs/my_notes_app.log
+
+output.logstash:
+  hosts: ["0.0.0.0:5044"] # <-- the ELK instance private ip, 5044 = Logstash Filebeat input
+
+logging.level: info
+logging.to_files: true
+logging.files.path: /var/log/filebeat
+logging.files.name: filebeat.log
