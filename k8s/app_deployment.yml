@@ -4,11 +4,11 @@ metadata:
   name: mongodb-data
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/path/to/host/storage" # replace with the actual path on the host
+    path: "/data/pv0001/" # replace with the actual path on the host
 
 ---
 apiVersion: v1
@@ -20,9 +20,8 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  nfs:
-    path: "/path/to/nfs" # replace with the actual NFS path
-    server: "nfs-server-ip" # replace with the actual NFS server IP
+  hostPath:
+    path: "/data/pv0002/" # replace with the actual path on the host
 
 ---
 apiVersion: v1
@@ -34,7 +33,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
 
 ---
 apiVersion: v1
@@ -65,7 +64,7 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: mongo
+        image: yarinlaniado/mongo:1.0
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           value: "note"
@@ -76,6 +75,11 @@ spec:
         volumeMounts:
         - name: mongodb-data
           mountPath: /data/db
+      volumes:
+        - name: mongodb-data
+          persistentVolumeClaim:
+            claimName: mongodb-data
+          
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -93,7 +97,7 @@ spec:
     spec:
       containers:
       - name: note-app
-        image: note-app
+        image: yarinlaniado/noteapp-1.0
         ports:
         - containerPort: 8000
         volumeMounts:
@@ -102,6 +106,10 @@ spec:
         env:
         - name: MONGO_URI
           value: "mongodb://note:note@mongodb:27017"
+      volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: mongodb-data
 
 ---
 apiVersion: v1
