@@ -1,3 +1,5 @@
+# Here we have all we need to deploy the app alongside mongodb and a filebeat that sends the logs to elasticsearch
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -103,13 +105,29 @@ spec:
         volumeMounts:
         - name: logs
           mountPath: /Noteapp/app/logs
-        env:
-        - name: MONGO_URI
-          value: "mongodb://note:note@mongodb:27017"
-      volumes:
+
+      - name: filebeat
+        image: elastic/filebeat:8.11.1
+        args: ["-c", "/etc/filebeat/filebeat.yml", "-e"]
+        volumeMounts:
+        - name: filebeat-config
+          mountPath: /etc/filebeat
         - name: logs
-          persistentVolumeClaim:
-            claimName: mongodb-data
+          mountPath: /logs
+        - name: filebeat-ca
+          mountPath: /usr/share/filebeat/ca.crt 
+          subPath: ca.crt
+
+      volumes:
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs
+      - name: filebeat-ca
+        secret:
+          secretName: quickstart-es-http-certs-public #make sure that it is existing!
+      - name: filebeat-config
+        configMap:
+          name: filebeat-config
 
 ---
 apiVersion: v1
