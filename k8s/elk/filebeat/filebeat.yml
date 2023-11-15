@@ -1,0 +1,20 @@
+# kubectl create configmap filebeat-config --from-file=filebeat.yml
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /logs/my_notes_app.log
+
+output.elasticsearch:
+  hosts: ["https://quickstart-es-http:9200"]
+  username: "elastic"
+  password: "5Y26rJjZF5q0rcz78l8r2gx2"
+  ssl.certificate_authorities: ["/usr/share/filebeat/ca.crt"]
+  ssl.verification_mode: none
+  index: "my_notes_app-%{+yyyy.MM.dd}"
+
+setup.template.name: "my_notes_app"
+setup.template.pattern: "my_notes_app-*"
+
+
+

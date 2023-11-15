@@ -11,8 +11,10 @@ services:
       - mongodb
     links:
       - mongodb 
+    volumes:
+      - logs:/Noteapp/app/logs
   mongodb:
-    image: mongo
+    image: mongo:7.0-rc-jammy
     container_name: my-mongodb-container
     ports:
       - "27017:27017"
@@ -21,5 +23,20 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: note
     volumes:
       - mongodb-data:/data/db
+  filebeat: # Adding filebeat for ELK
+    build:
+      context: ./elk/filebeat
+    volumes:
+      - logs:/logs
+    restart: always
+
+    
 volumes:
   mongodb-data:
+  logs: #logs nfs - storage for both us and filebeat
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'nfs'
+      device: ./elk/logs
+
