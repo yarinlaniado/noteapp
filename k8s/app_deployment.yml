@@ -99,7 +99,7 @@ spec:
     spec:
       containers:
       - name: note-app
-        image: yarinlaniado/noteapp-1.0
+        image: yarinlaniado/noteapp
         ports:
         - containerPort: 8000
         volumeMounts:
