@@ -9,11 +9,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Get short SHA
-        run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
-      - name: Print short SHA
-        run: echo "Short SHA is ${{ env.SHORT_SHA }}"
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -33,13 +28,9 @@ jobs:
         if: steps.test.outcome == 'success'
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{github.run_number}}"
-
           docker tag ${{secrets.DOCKER_IMAGE_NAME }}:latest "$IMAGE_NAME"
-
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-          
           docker push "$IMAGE_NAME"
-
           docker push ${{secrets.DOCKER_IMAGE_NAME }}:latest
       - name: Clean up
         run: |
