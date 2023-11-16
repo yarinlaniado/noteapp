@@ -15,8 +15,9 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: |
+          ls -last
           pip install -r app/requirements.txt
-        working-directory: ./noteapp/app
+        working-directory: /noteapp/app
       - name: Docker-compose up before tests
         run: |
           docker-compose up -d
