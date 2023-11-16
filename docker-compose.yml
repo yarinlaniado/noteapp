@@ -4,15 +4,13 @@ services:
   app:
     build:
       context: .
-    image: note-app
+    image: yarinlaniado/noteapp
     ports:
       - "8080:8000"
     depends_on:
       - mongodb
     links:
       - mongodb 
-    volumes:
-      - logs:/Noteapp/app/logs
   mongodb:
     image: yarinlaniado/mongo:1.0
     container_name: my-mongodb-container
@@ -23,20 +21,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: note
     volumes:
       - mongodb-data:/data/db
-  filebeat: # Adding filebeat for ELK
-    build:
-      context: ./elk/filebeat
-    volumes:
-      - logs:/logs
-    restart: always
-
     
 volumes:
   mongodb-data:
-  logs: #logs nfs - storage for both us and filebeat
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'nfs'
-      device: ./elk/logs
-
