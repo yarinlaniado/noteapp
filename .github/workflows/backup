@@ -49,4 +49,4 @@ jobs:
         run: |
           echo "tests failed! check the workflow"
 
-test
+hjtest
