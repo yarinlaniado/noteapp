@@ -11,8 +11,6 @@ services:
       - mongodb
     links:
       - mongodb 
-    volumes:
-      - logs:/Noteapp/app/logs
   mongodb:
     image: mongo:7.0-rc-jammy
     container_name: my-mongodb-container
