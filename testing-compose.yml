@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-    image: note-app
+    image: yarinlaniado/noteapp-1.0
     ports:
       - "8080:8000"
     depends_on:
