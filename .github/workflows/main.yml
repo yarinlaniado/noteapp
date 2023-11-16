@@ -75,7 +75,7 @@ jobs:
           echo "New Version: $NEW_VERSION"
       
       - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Push Docker image to DockerHub
         if: steps.test.outcome == 'success'
