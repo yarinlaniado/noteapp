@@ -32,7 +32,8 @@ jobs:
         run: |
           IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/noteapp"
           VERSION=1.0.${{github.run_number}}
-          docker tag yarinlaniado/noteapp:latest "$IMAGE_NAME"
+          docker tag yarinlaniado/noteapp:latest "$IMAGE_NAME":"$VERSION"
+          docker push "$IMAGE_NAME":"$VERSION"
           docker push "$IMAGE_NAME"
       - name: Clean up
         run: |
