@@ -40,9 +40,8 @@ jobs:
         working-directory: ./noteapp
       - name: Push Docker image to DockerHub
         if: steps.test.outcome == 'success'
-        run: >
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{
-          secrets.DOCKER_IMAGE_NAME}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}"
+        run: |
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}"
 
           docker tag note-app:latest "$IMAGE_NAME"
 
