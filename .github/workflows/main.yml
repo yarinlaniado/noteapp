@@ -14,20 +14,15 @@ jobs:
 
       # Extract commit message
       - name: Get commit message
-        id: commit-msg
-        run: echo "::set-output name=message::$(git log -1 --pretty=%B)"
+        run: echo "COMMIT_MSG=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
 
       # Read the current version
       - name: Read current version
-        id: current-version
-        run: echo "::set-output name=version::$(cat version.txt)"
+        run: echo "CURRENT_VERSION=$(cat version.txt)" >> $GITHUB_ENV
 
       # Determine version increment
       - name: Determine version increment
-        id: version-bump
         run: |
-          COMMIT_MSG="${{ steps.commit-msg.outputs.message }}"
-          CURRENT_VERSION="${{ steps.current-version.outputs.version }}"
           IFS='.' read -ra VER <<< "$CURRENT_VERSION"
           MAJOR=${VER[0]}
           MINOR=${VER[1]}
@@ -43,16 +38,16 @@ jobs:
             PATCH=$((PATCH+1))
           fi
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
-          echo "::set-output name=new-version::$NEW_VERSION"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       # Update the version file
       - name: Update version file
         run: |
-          echo ${{ steps.version-bump.outputs.new-version }} > version.txt
+          echo $NEW_VERSION > version.txt
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add version.txt
-          git commit -m "Update version to ${{ steps.version-bump.outputs.new-version }}"
+          git commit -m "Update version to $NEW_VERSION"
           git push
 
       # Rest of your existing steps
