@@ -1,74 +1,66 @@
 name: CI/CD Pipeline
-
 on:
   push:
     branches:
-      - main
-
+      - yarin-cicd
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-
       - name: Install dependencies
         run: |
           pip install -r app/requirements.txt
         working-directory: ./noteapp/app
-
       - name: Docker-compose up before tests
         run: |
           docker-compose up -d
         working-directory: ./noteapp
-
       - name: Run Tests
         id: test
         run: |
           python3 app/test.py
         working-directory: ./noteapp
-
       - name: Generate Docker image tag
         if: steps.test.outcome == 'success'
         run: |
           ./generate-tag.sh
         id: tag
         working-directory: ./noteapp
-
       - name: Build Docker image after tests
         if: steps.test.outcome == 'success'
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}
+        run: >
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{
+          secrets.DOCKER_IMAGE_NAME }}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}
         working-directory: ./noteapp
-
       - name: Push Docker image to DockerHub
         if: steps.test.outcome == 'success'
-        run: |
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}"
+        run: >
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{
+          secrets.DOCKER_IMAGE_NAME}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}"
+
           docker tag note-app:latest "$IMAGE_NAME"
+
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
           docker push "$IMAGE_NAME"
         working-directory: ./noteapp
-
       - name: Clean up
         run: |
           docker stop note-app-container || true
           docker rm note-app-container || true
           docker rmi note-app || true
         working-directory: ./noteapp
-
       - name: Deploy to EKS
         if: steps.test.outcome == 'success'
         run: |
           # Placeholder for deploying application to EKS
         working-directory: ./noteapp
-
       - name: Notify on Test Failure
         if: steps.test.outcome != 'success'
         run: |
