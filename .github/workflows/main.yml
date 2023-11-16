@@ -48,7 +48,7 @@ jobs:
           git config --global user.email 'github-actions@github.com'
           git add version.txt
           git commit -m "Update version to $NEW_VERSION"
-          git push
+          git push https://${{ secrets.DAVID }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
 
       # Rest of your existing steps
       - name: Set up Python
