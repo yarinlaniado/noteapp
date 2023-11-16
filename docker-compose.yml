@@ -14,7 +14,7 @@ services:
     volumes:
       - logs:/Noteapp/app/logs
   mongodb:
-    image: mongo:7.0-rc-jammy
+    image: yarinlaniado/mongo:1.0
     container_name: my-mongodb-container
     ports:
       - "27017:27017"
