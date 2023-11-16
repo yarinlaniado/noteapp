@@ -27,7 +27,7 @@ jobs:
       - name: Generate Docker image tag
         if: steps.test.outcome == 'success'
         run: |
-          ./generate-tag.sh
+          .github/workflows/generate-tag.sh
         id: tag
       - name: Build Docker image after tests
         if: steps.test.outcome == 'success'
