@@ -16,8 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           ls -last
-          pip install -r app/requirements.txt
-        working-directory: /noteapp/app
+          pip install -r requirements.txt
       - name: Docker-compose up before tests
         run: |
           docker-compose up -d
