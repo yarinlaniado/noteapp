@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Get short SHA
+        run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+      - name: Print short SHA
+        run: echo "Short SHA is ${{ env.SHORT_SHA }}"
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -36,7 +41,7 @@ jobs:
         if: steps.test.outcome == 'success'
         run: >
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${{
-          secrets.DOCKER_IMAGE_NAME }}:${{ steps.tag.outputs.NEW_DOCKER_TAG }}
+          secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }}
       - name: Push Docker image to DockerHub
         if: steps.test.outcome == 'success'
         run: |

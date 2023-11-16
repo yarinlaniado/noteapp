@@ -2,7 +2,7 @@
 
 # Your DockerHub username and image name
 DOCKER_USERNAME="yarinlaniado"
-IMAGE_NAME="note-app"
+IMAGE_NAME="noteapp-1.0"
 
 # Get the latest Docker image tag from DockerHub
 LATEST_TAG=$(curl -s "https://hub.docker.com/v2/repositories/${DOCKER_USERNAME}/${IMAGE_NAME}/tags" | jq -r '.results[].name' | sort -r | head -n 1)
