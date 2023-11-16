@@ -1,5 +1,8 @@
 name: CI/CD Pipeline
-on: [push]
+on:
+  push:
+    branches:
+      - yarin-cicd
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
