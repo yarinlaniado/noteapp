@@ -11,3 +11,4 @@ main_test.go
 Makefile
 README.md
 k8s
+helm
