@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: noteapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: noteapp.xyz
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: note-app
+              port:
+                number: 8080

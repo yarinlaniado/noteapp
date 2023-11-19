@@ -23,8 +23,5 @@ data:
 
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2023-11-15T13:59:05Z"
+  creationTimestamp: null
   name: filebeat-config
-  namespace: default
-  resourceVersion: "31034"
-  uid: 06580b82-e87f-43cb-8146-188a45c97c39
