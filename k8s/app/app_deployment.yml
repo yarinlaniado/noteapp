@@ -1,5 +1,4 @@
 # Here we have all we need to deploy the app alongside mongodb and a filebeat that sends the logs to elasticsearch
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -99,7 +98,7 @@ spec:
     spec:
       containers:
       - name: note-app
-        image: yarinlaniado/noteapp
+        image: yarinlaniado/noteapp:2.4.0
         ports:
         - containerPort: 8000
         volumeMounts:
@@ -153,3 +152,4 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8000
+
