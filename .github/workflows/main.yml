@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - yarin-cicd
+      - k8s
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
