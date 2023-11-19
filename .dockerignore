@@ -1,3 +1,13 @@
-.git/
-*.md
-
+.git
+.vscode
+.dockerignore
+.env
+.gitignore
+docker-compose.dev.yml
+docker-compose.yml
+Dockerfile
+Dockerfile.dev
+main_test.go
+Makefile
+README.md
+k8s

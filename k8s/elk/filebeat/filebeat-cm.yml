@@ -11,7 +11,7 @@ data:
     output.elasticsearch:
       hosts: ["https://quickstart-es-http:9200"]
       username: "elastic"
-      password: "5Y26rJjZF5q0rcz78l8r2gx2"
+      password: "E1p58YUDP9WmbU2eBt80544i"
       ssl.certificate_authorities: ["/usr/share/filebeat/ca.crt"]
       ssl.verification_mode: none
       index: "my_notes_app-%{+yyyy.MM.dd}"

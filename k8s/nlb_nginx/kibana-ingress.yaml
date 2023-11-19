@@ -3,19 +3,22 @@ kind: Ingress
 metadata:
   name: kibana-ingress
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-
-
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   ingressClassName: nginx
   rules:
   - host: kibana.noteapp.xyz
     http:
       paths:
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: quickstart-kb-http
-              port:
-                number: 5044
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: quickstart-kb-http
+            port:
+              number: 5601
+  tls:
+  - hosts:
+    - kibana.noteapp.xyz
+    secretName: quickstart-kb-http-certs-public
+
