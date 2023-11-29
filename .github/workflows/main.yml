@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - SemVer
+      - dev
     paths-ignore:
       - 'version.txt'  # Ignore changes to version.txt file
 jobs:
@@ -99,4 +99,3 @@ jobs:
       - name: Notify on Test Failure
         if: steps.test.outcome != 'success'
         run: echo "tests failed! check the workflow"
-
