@@ -27,11 +27,11 @@ jobs:
       - run: terraform validate
 
       - name: Plan
-        run: terraform plan -no-color -input=false
+        run: terraform plan -no-color -input=false -out=tfplan
 
-      # Fully automatic — no approval gate. Any push to main touching
-      # terraform/eks/** applies immediately, including first-time cluster
-      # creation (~$125-133/mo baseline once it exists).
+      # No approval gate — any push to main touching terraform/eks/** applies
+      # immediately, including first-time cluster creation (~$125-133/mo
+      # baseline once it exists).
       - name: Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -input=false
+        run: terraform apply -input=false tfplan

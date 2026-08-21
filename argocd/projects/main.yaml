@@ -30,10 +30,5 @@ spec:
       kind: MutatingWebhookConfiguration
     - group: "admissionregistration.k8s.io"
       kind: ValidatingWebhookConfiguration
-  # Every app under this project is a trusted, first-party-managed chart
-  # (the app itself, kube-prometheus-stack, cluster-autoscaler, the TTL
-  # CronJob) — cluster-autoscaler needs ClusterRole/ClusterRoleBinding to
-  # manage nodes cluster-wide, kube-prometheus-stack needs its CRDs and
-  # admission webhooks. The untrusted-branch security boundary is
-  # ephemeral-envs.yaml, not this one — that project's whitelist stays
-  # Namespace-only.
+  # Every app here is a trusted, first-party chart, unlike ephemeral-envs.yaml
+  # (the untrusted-branch boundary), which stays Namespace-only.

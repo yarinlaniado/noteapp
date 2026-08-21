@@ -57,20 +57,13 @@ resource "aws_iam_openid_connect_provider" "eks" {
   thumbprint_list = [data.tls_certificate.eks.certificates[length(data.tls_certificate.eks.certificates) - 1].sha1_fingerprint]
 }
 
-# --- CI (gha-noteapp-terraform) needs cluster-admin access for subsequent
-# applies (e.g. resizing the node group). bootstrap_cluster_creator_admin_permissions
-# only auto-grants admin to whoever's identity actually issued the
-# CreateCluster call — since the cluster was created via a CI-driven apply,
-# that's this role, not any particular human user. Being an AWS IAM admin
-# does not imply Kubernetes-level cluster-admin — those are separate
-# authorization systems, bridged by EKS access entries.
+# CI needs cluster-admin for later applies (e.g. resizing the node group) —
+# bootstrap_cluster_creator_admin_permissions only covers whoever's identity
+# ran CreateCluster, i.e. this role, not any human user.
 #
-# ARN is constructed directly rather than looked up via data.aws_iam_role:
-# that role's own IAM policy only grants iam:GetRole on "noteapp-*"-named
-# roles (see terraform/bootstrap/github-oidc.tf), and "gha-noteapp-terraform"
-# doesn't match that pattern — a live lookup would need iam:GetRole on
-# itself, which is both a permissions gap and an unnecessary runtime
-# dependency when the ARN is fully deterministic from the account ID alone.
+# ARN is computed directly instead of via data.aws_iam_role: that lookup
+# would need iam:GetRole on this role's own name, which the noteapp-*-scoped
+# policy in terraform/bootstrap/github-oidc.tf doesn't grant.
 locals {
   gha_terraform_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/gha-noteapp-terraform"
 }
@@ -90,11 +83,10 @@ resource "aws_eks_access_policy_association" "gha_terraform_admin" {
   }
 }
 
-# --- Human operator access. Without this, an AWS IAM admin gets
-# "Unauthorized" browsing this cluster's resources in the EKS console (or
-# via kubectl) despite full AWS-level access — the console proxies through
-# the Kubernetes API using access entries, a completely separate RBAC layer
-# from IAM. Same fix pattern as the CI role above.
+# Human operator access — same pattern as above, for the account admin.
+# Without it, AWS-level admin still gets "Unauthorized" browsing this
+# cluster in the EKS console: that's a separate Kubernetes RBAC layer,
+# bridged by access entries rather than implied by IAM.
 locals {
   admin_user_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/drlaniado"
 }

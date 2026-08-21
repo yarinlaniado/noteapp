@@ -27,10 +27,6 @@ jobs:
       id-token: write
       contents: read
 
-  # Its own job so `app` (below) can depend on it directly — infra applies
-  # before the app tries to build/deploy against it. On a branch that
-  # doesn't touch terraform/**, this (and terraform_app) is skipped
-  # entirely, not run-and-pass, so `app` proceeds immediately either way.
   terraform_eks:
     needs: detect
     if: needs.detect.outputs.terraform_changed == 'true'
@@ -44,10 +40,7 @@ jobs:
     if: needs.detect.outputs.helm_changed == 'true'
     uses: ./.github/workflows/_helm-validate.yml
 
-  # tf first, app last: waits for both terraform jobs to either succeed or
-  # be skipped (not needed) before building/deploying — never runs against
-  # infra that's still mid-apply, and never runs at all if a terraform
-  # apply it depended on actually failed.
+  # tf first, app last: waits for both terraform jobs to succeed or skip.
   app:
     needs: [detect, terraform_app, terraform_eks]
     if: |

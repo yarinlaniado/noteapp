@@ -65,16 +65,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           bash scripts/git-push-retry.sh "chore: bump version to $(cat version.txt)" version.txt
 
-      # One tag per version, pointing at the exact commit that landed on
-      # main — whatever commit git-push-retry.sh's rebase loop ultimately
-      # pushed, since `git tag` with no ref defaults to current HEAD.
-      #
-      # Idempotent by design: a re-run of an already-tagged commit (e.g.
-      # "Re-run failed jobs" on a run that got this far before failing
-      # later) must not fail here. But if the tag exists pointing at a
-      # DIFFERENT commit, that's a real conflict — two commits claiming the
-      # same version — and silently overwriting a release tag would be
-      # wrong, so that case fails loudly instead.
+      # Idempotent: a re-run of an already-tagged commit is a no-op, but a
+      # different commit claiming the same version fails loudly instead of
+      # silently overwriting the tag.
       - name: Tag release
         if: steps.vars.outputs.is_main == 'true'
         run: |
