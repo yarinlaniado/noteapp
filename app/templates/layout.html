@@ -30,7 +30,7 @@
     {% endblock %}
     </main>
     <footer class="app-footer">
-        Notes App
+        Notes App{% if app_version %} · v{{ app_version }}{% endif %}
     </footer>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

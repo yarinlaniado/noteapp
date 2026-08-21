@@ -11,6 +11,18 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key')
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5 MB upload limit
 
+# version.txt lives at the repo root, one level up from app/ in the image (see Dockerfile).
+try:
+    with open(os.path.join(os.path.dirname(__file__), '..', 'version.txt')) as f:
+        APP_VERSION = f.read().strip()
+except OSError:
+    APP_VERSION = None
+
+
+@app.context_processor
+def inject_app_version():
+    return {'app_version': APP_VERSION}
+
 # logging — stdout, so `kubectl logs` sees it (no PV/filebeat sidecar in the k8s deploy)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(message)s', datefmt='%d.%m.%y %H:%M')
