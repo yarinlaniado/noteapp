@@ -17,8 +17,23 @@ spec:
       server: https://kubernetes.default.svc
     - namespace: kube-system # cluster-autoscaler only — the LB controller is Terraform-bootstrapped, not ArgoCD-managed
       server: https://kubernetes.default.svc
-  clusterResourceWhitelist: []
-  # Empty on purpose: `syncOptions: CreateNamespace=true` on each Application
-  # pre-creates its destination namespace without needing it whitelisted here
-  # — this whitelist governs cluster-scoped resources an Application *owns*,
-  # which none of these apps do.
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+    - group: "rbac.authorization.k8s.io"
+      kind: ClusterRole
+    - group: "rbac.authorization.k8s.io"
+      kind: ClusterRoleBinding
+    - group: "apiextensions.k8s.io"
+      kind: CustomResourceDefinition
+    - group: "admissionregistration.k8s.io"
+      kind: MutatingWebhookConfiguration
+    - group: "admissionregistration.k8s.io"
+      kind: ValidatingWebhookConfiguration
+  # Every app under this project is a trusted, first-party-managed chart
+  # (the app itself, kube-prometheus-stack, cluster-autoscaler, the TTL
+  # CronJob) — cluster-autoscaler needs ClusterRole/ClusterRoleBinding to
+  # manage nodes cluster-wide, kube-prometheus-stack needs its CRDs and
+  # admission webhooks. The untrusted-branch security boundary is
+  # ephemeral-envs.yaml, not this one — that project's whitelist stays
+  # Namespace-only.

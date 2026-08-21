@@ -61,10 +61,9 @@ resource "aws_iam_openid_connect_provider" "eks" {
 # applies (e.g. resizing the node group). bootstrap_cluster_creator_admin_permissions
 # only auto-grants admin to whoever's identity actually issued the
 # CreateCluster call — since the cluster was created via a CI-driven apply,
-# that's this role, not any particular human user (an earlier version of
-# this comment assumed the opposite, which was wrong: being an AWS IAM admin
-# does not imply Kubernetes-level cluster-admin — those are two separate
-# authorization systems, and EKS access entries are what bridges them).
+# that's this role, not any particular human user. Being an AWS IAM admin
+# does not imply Kubernetes-level cluster-admin — those are separate
+# authorization systems, bridged by EKS access entries.
 #
 # ARN is constructed directly rather than looked up via data.aws_iam_role:
 # that role's own IAM policy only grants iam:GetRole on "noteapp-*"-named

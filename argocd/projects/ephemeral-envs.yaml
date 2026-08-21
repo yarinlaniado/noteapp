@@ -9,7 +9,8 @@ spec:
   destinations:
     - namespace: "*"
       server: https://kubernetes.default.svc
-  clusterResourceWhitelist: []
-  # Empty and deliberate: ephemeral-env Applications can create/manage only
-  # namespaced resources, never anything cluster-scoped — a broken or
-  # malicious branch deploy is contained to its own namespace.
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  # Nothing else cluster-scoped is allowed: a broken or malicious branch
+  # deploy stays contained to its own namespace.
