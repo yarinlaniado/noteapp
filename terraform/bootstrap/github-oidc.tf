@@ -69,18 +69,25 @@ resource "aws_iam_role_policy" "gha_deploy" {
         Resource = "arn:aws:ecr:eu-north-1:${data.aws_caller_identity.current.account_id}:repository/noteapp"
       },
       {
+        # Covers both cases the "Run integration tests" step in _app.yml can
+        # point at: the prod table on a main-branch run, or the non-prod
+        # table on an ephemeral-env run.
         Sid    = "AppDataForCiTests"
         Effect = "Allow"
         Action = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:DeleteItem", "dynamodb:Scan", "dynamodb:Query"]
         Resource = [
+          "arn:aws:dynamodb:eu-north-1:${data.aws_caller_identity.current.account_id}:table/noteapp-notes",
           "arn:aws:dynamodb:eu-north-1:${data.aws_caller_identity.current.account_id}:table/noteapp-notes-nonprod",
         ]
       },
       {
-        Sid      = "AppImagesForCiTests"
-        Effect   = "Allow"
-        Action   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
-        Resource = "arn:aws:s3:::noteapp-images-nonprod-${data.aws_caller_identity.current.account_id}-eu-north-1/*"
+        Sid    = "AppImagesForCiTests"
+        Effect = "Allow"
+        Action = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+        Resource = [
+          "arn:aws:s3:::noteapp-images-${data.aws_caller_identity.current.account_id}-eu-north-1/*",
+          "arn:aws:s3:::noteapp-images-nonprod-${data.aws_caller_identity.current.account_id}-eu-north-1/*",
+        ]
       },
     ]
   })
