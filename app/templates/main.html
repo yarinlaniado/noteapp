@@ -4,7 +4,7 @@
         {% if notes %}
             <div class="note-grid">
                 {% for note in notes %}
-                    <div class="note-card">
+                    <div class="note-card note-color-{{ note.color }}">
                         {% if note.image_url %}
                             <img src="{{ note.image_url }}" alt="{{ note.title }}" class="note-card-image">
                         {% endif %}
