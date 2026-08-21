@@ -31,7 +31,11 @@ resource "null_resource" "argocd_root_app" {
   }
 
   provisioner "local-exec" {
-    command = <<-EOT
+    # local-exec defaults to /bin/sh, not bash — on Ubuntu runners that's
+    # dash, which doesn't understand `set -o pipefail` at all ("Illegal
+    # option"). Force bash explicitly rather than dropping pipefail.
+    interpreter = ["/bin/bash", "-c"]
+    command     = <<-EOT
       set -euo pipefail
       aws eks update-kubeconfig --name ${aws_eks_cluster.this.name} --region ${var.aws_region}
       kubectl apply -f ${path.module}/../../argocd/root-app.yaml

@@ -69,6 +69,13 @@ resource "aws_secretsmanager_secret" "gitops_bot_token" {
   name        = "noteapp/gitops-bot-token"
   description = "GitHub PAT (contents:write on yarinlaniado/noteapp) used by the in-cluster TTL CronJob to push gitops/ cleanup commits. Value populated out-of-band via 'aws secretsmanager put-secret-value' — never in git or Terraform state."
 
+  # Default delete behavior only *schedules* deletion (recovery window) —
+  # a destroy+recreate in the same apply then collides on the still-pending
+  # name. This secret never holds anything irreplaceable (just a rotatable
+  # PAT, repopulated out-of-band after any recreate), so skipping the
+  # recovery window is the right tradeoff here.
+  recovery_window_in_days = 0
+
   tags = {
     Project = "noteapp"
   }
