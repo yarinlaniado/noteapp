@@ -68,12 +68,29 @@ jobs:
       # One tag per version, pointing at the exact commit that landed on
       # main — whatever commit git-push-retry.sh's rebase loop ultimately
       # pushed, since `git tag` with no ref defaults to current HEAD.
+      #
+      # Idempotent by design: a re-run of an already-tagged commit (e.g.
+      # "Re-run failed jobs" on a run that got this far before failing
+      # later) must not fail here. But if the tag exists pointing at a
+      # DIFFERENT commit, that's a real conflict — two commits claiming the
+      # same version — and silently overwriting a release tag would be
+      # wrong, so that case fails loudly instead.
       - name: Tag release
         if: steps.vars.outputs.is_main == 'true'
         run: |
           TAG="v$(cat version.txt)"
-          git tag "$TAG"
-          git push origin "$TAG"
+          CURRENT_SHA=$(git rev-parse HEAD)
+          EXISTING_SHA=$(git ls-remote origin "refs/tags/$TAG" | cut -f1)
+
+          if [ -z "$EXISTING_SHA" ]; then
+            git tag "$TAG"
+            git push origin "$TAG"
+          elif [ "$EXISTING_SHA" = "$CURRENT_SHA" ]; then
+            echo "Tag $TAG already exists and points at this exact commit — nothing to do."
+          else
+            echo "Tag $TAG already exists but points at a different commit ($EXISTING_SHA, not $CURRENT_SHA) — refusing to overwrite a release tag." >&2
+            exit 1
+          fi
 
       - name: Build and push image
         env:
