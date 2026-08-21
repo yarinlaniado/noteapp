@@ -29,13 +29,8 @@ spec:
               value: {{ .Values.env.dynamodbTable | quote }}
             - name: S3_BUCKET_NAME
               value: {{ .Values.env.s3BucketName | quote }}
-            - name: SCRIPT_NAME
-              value: {{ .Values.env.scriptName | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          # Plain "/" is what PrefixMiddleware passes straight through
-          # unmodified (no prefix on this path) — works identically for main
-          # and every ephemeral env with zero per-environment configuration.
           readinessProbe:
             httpGet:
               path: /

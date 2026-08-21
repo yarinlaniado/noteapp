@@ -1,0 +1,16 @@
+{{- if .Values.ephemeral.enabled }}
+# Only rendered for ephemeral environments. main never sets ephemeral.enabled,
+# so this never applies to the permanent noteapp namespace — ArgoCD only
+# prunes resources it actually tracks as belonging to an Application, and
+# CreateNamespace=true's auto-created namespace isn't one of them (confirmed
+# live: deleting an ephemeral Application cleans up everything inside its
+# namespace but leaves the empty namespace itself behind). Making the
+# Namespace a real templated resource here is what lets ArgoCD's normal
+# prune/cascade-delete actually remove it too.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+{{- end }}

@@ -144,14 +144,12 @@ jobs:
           image:
             tag: ${{ steps.vars.outputs.tag }}
           env:
-            scriptName: /env/${NS}
             dynamodbTable: noteapp-notes-nonprod
             s3BucketName: noteapp-images-nonprod-686062433938-eu-north-1
           serviceAccount:
             roleArn: arn:aws:iam::686062433938:role/noteapp-app-nonprod
-          ingress:
-            pathPrefix: /env/${NS}
-            groupOrder: "100"
+          ephemeral:
+            enabled: true
           createdAt: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           ttlHours: 24
           EOF

@@ -9,7 +9,6 @@ env:
   awsRegion: eu-north-1
   dynamodbTable: noteapp-notes
   s3BucketName: noteapp-images-686062433938-eu-north-1
-  scriptName: "" # "" for main; "/env/<namespace>" for ephemeral environments
 
 resources:
   requests:
@@ -26,6 +25,5 @@ serviceAccount:
   # regardless of what's configured here — enforced by IAM trust policy).
   roleArn: "arn:aws:iam::686062433938:role/noteapp-app-prod"
 
-ingress:
-  pathPrefix: "/"
-  groupOrder: "1000" # evaluated last on the shared ALB — main is the catch-all
+ephemeral:
+  enabled: false # gitops/envs/*/values.yaml sets this true — see templates/namespace.yaml
