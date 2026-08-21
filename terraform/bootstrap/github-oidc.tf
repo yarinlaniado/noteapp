@@ -115,9 +115,13 @@ resource "aws_iam_role_policy" "gha_terraform" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid      = "StateBackend"
-        Effect   = "Allow"
-        Action   = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"]
+        Sid    = "StateBackend"
+        Effect = "Allow"
+        # DeleteObject is required even though nothing should ever want a
+        # state file deleted: Terraform's native S3 lockfile (use_lockfile)
+        # creates a .tflock object during an operation and DELETES it to
+        # release the lock afterward — without this, the lock never clears.
+        Action   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"]
         Resource = ["arn:aws:s3:::noteapp-tfstate-${data.aws_caller_identity.current.account_id}", "arn:aws:s3:::noteapp-tfstate-${data.aws_caller_identity.current.account_id}/*"]
       },
       {
