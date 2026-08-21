@@ -130,6 +130,60 @@ docker compose up -d --build
 
 This builds the app and runs it against the **real** AWS DynamoDB table/S3 bucket by default (using your local AWS CLI credentials, mounted read-only into the container — no keys are baked into the image). Visit `http://localhost:8081`.
 
+## Starting from scratch
+
+Everything here is disposable by design — the whole stack can be torn down to $0 and rebuilt from this repo alone, in order:
+
+1. **Bootstrap** (one-time, applied by hand — nothing else can exist yet for CI to use):
+   ```
+   cd terraform/bootstrap
+   terraform init
+   terraform apply
+   ```
+   Creates the Terraform state S3 bucket, the GitHub OIDC provider, and the two CI IAM roles (`gha-noteapp-deploy`, `gha-noteapp-terraform`).
+
+2. **Wire up GitHub Actions** — in the repo's Settings → Secrets and variables → Actions → *Variables* tab, set:
+   - `AWS_DEPLOY_ROLE_ARN` = the `gha_deploy_role_arn` output from step 1
+   - `AWS_TERRAFORM_ROLE_ARN` = the `gha_terraform_role_arn` output from step 1
+
+   No secrets needed here — OIDC means no static AWS keys anywhere.
+
+3. **Data layer**:
+   ```
+   cd terraform/app
+   terraform init
+   terraform apply
+   ```
+   Creates the DynamoDB tables and S3 buckets — prod and the shared non-prod copies ephemeral environments use.
+
+4. **Cluster** (~15-20 minutes — VPC, EKS control plane, node group, ECR, the AWS Load Balancer Controller, and ArgoCD itself, which then auto-applies the one root `Application` manifest):
+   ```
+   cd terraform/eks
+   terraform init
+   terraform apply
+   ```
+
+5. **One manual, out-of-band step**: populate the GitHub PAT the in-cluster TTL cleanup job uses (it runs outside GitHub Actions, so OIDC doesn't cover it):
+   ```
+   aws secretsmanager put-secret-value \
+     --secret-id noteapp/gitops-bot-token \
+     --secret-string "<a fine-grained PAT, contents:write on this repo only>" \
+     --region eu-north-1
+   ```
+
+6. **Verify ArgoCD is syncing**:
+   ```
+   aws eks update-kubeconfig --name noteapp --region eu-north-1
+   kubectl get applications -n argocd
+   ```
+
+7. **Deploy the app**: push any commit to `main` (or re-run the `app` workflow manually). CI builds the image, pushes it to ECR, and writes `gitops/main/values.yaml` — ArgoCD picks that up and deploys within a minute or two. Find the URL with:
+   ```
+   kubectl get ingress -n noteapp
+   ```
+
+That's the whole rebuild — two `terraform apply`s, one PAT, one push to `main`.
+
 ## Cost
 
 The EKS control plane alone is a flat ~$73/month, regardless of how much or little the app is used — that's the single biggest, unavoidable line item. All-in, the always-on baseline (cluster, node group, load balancer, monitoring) runs roughly **$125-133/month**. An active ephemeral environment costs close to nothing extra on top, since it shares the already-running nodes rather than spinning up new infrastructure.
