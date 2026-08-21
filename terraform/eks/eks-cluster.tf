@@ -58,10 +58,13 @@ resource "aws_iam_openid_connect_provider" "eks" {
 }
 
 # --- CI (gha-noteapp-terraform) needs cluster-admin access for subsequent
-# applies (e.g. resizing the node group) — the human user gets this
-# automatically via bootstrap_cluster_creator_admin_permissions above, since
-# they run the first apply, but that grant is tied to whoever creates the
-# cluster, not to this role generally.
+# applies (e.g. resizing the node group). bootstrap_cluster_creator_admin_permissions
+# only auto-grants admin to whoever's identity actually issued the
+# CreateCluster call — since the cluster was created via a CI-driven apply,
+# that's this role, not any particular human user (an earlier version of
+# this comment assumed the opposite, which was wrong: being an AWS IAM admin
+# does not imply Kubernetes-level cluster-admin — those are two separate
+# authorization systems, and EKS access entries are what bridges them).
 #
 # ARN is constructed directly rather than looked up via data.aws_iam_role:
 # that role's own IAM policy only grants iam:GetRole on "noteapp-*"-named
@@ -81,6 +84,30 @@ resource "aws_eks_access_entry" "gha_terraform" {
 resource "aws_eks_access_policy_association" "gha_terraform_admin" {
   cluster_name  = aws_eks_cluster.this.name
   principal_arn = local.gha_terraform_role_arn
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
+}
+
+# --- Human operator access. Without this, an AWS IAM admin gets
+# "Unauthorized" browsing this cluster's resources in the EKS console (or
+# via kubectl) despite full AWS-level access — the console proxies through
+# the Kubernetes API using access entries, a completely separate RBAC layer
+# from IAM. Same fix pattern as the CI role above.
+locals {
+  admin_user_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/drlaniado"
+}
+
+resource "aws_eks_access_entry" "admin_user" {
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = local.admin_user_arn
+}
+
+resource "aws_eks_access_policy_association" "admin_user_admin" {
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = local.admin_user_arn
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 
   access_scope {
