@@ -28,6 +28,7 @@ table = dynamodb.Table(DYNAMODB_TABLE)
 s3 = boto3.client('s3', region_name=AWS_REGION, endpoint_url=f'https://s3.{AWS_REGION}.amazonaws.com')
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+NOTE_COLORS = {'default', 'red', 'orange', 'yellow', 'green', 'blue', 'purple'}
 
 
 def allowed_image(filename):
@@ -79,6 +80,7 @@ def get_existing_notes():
             'created_at': created_at,
             '_id': note['id'],
             'image_url': get_image_url(note.get('image_key')),
+            'color': note.get('color', 'default'),
         })
 
     notes.sort(key=lambda n: n['created_at'] if n['created_at'] != 'N/A' else datetime.min, reverse=True)
@@ -108,6 +110,9 @@ def create():
         else:
             note_id = uuid.uuid4().hex
             current_time = datetime.now()
+            color = request.form.get('color', 'default')
+            if color not in NOTE_COLORS:
+                color = 'default'
 
             image_key = None
             if image_file and image_file.filename:
@@ -118,6 +123,7 @@ def create():
                 'title': title,
                 'content': content,
                 'created_at': current_time.isoformat(),
+                'color': color,
             }
             if image_key:
                 note_data['image_key'] = image_key
@@ -140,7 +146,8 @@ def read(id):
             'read.html',
             title=note['title'],
             content=note['content'],
-            image_url=get_image_url(note.get('image_key'))
+            image_url=get_image_url(note.get('image_key')),
+            color=note.get('color', 'default')
         )
     except Exception as e:
         logging.error(f'Note "{id}"not found : {e}')

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="container">
-        <div class="content-card note-detail">
+        <div class="content-card note-detail note-color-{{ color }}">
             <a href="{{ url_for('main') }}" class="back-link">&larr; Back to Notes</a>
             <h1>{{ title }}</h1>
             {% if image_url %}
