@@ -117,12 +117,33 @@ main {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
+    position: relative;
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .note-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-hover);
+}
+
+.note-drag-handle {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    color: #c4c4d6;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: grab;
+    user-select: none;
+    padding: 0.2rem 0.3rem;
+}
+
+.note-drag-handle:hover {
+    color: var(--text-muted);
+}
+
+.note-card-ghost {
+    opacity: 0.4;
 }
 
 .note-card .note-card-image {

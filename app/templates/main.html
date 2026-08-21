@@ -4,7 +4,8 @@
         {% if notes %}
             <div class="note-grid">
                 {% for note in notes %}
-                    <div class="note-card note-color-{{ note.color }}">
+                    <div class="note-card note-color-{{ note.color }}" data-id="{{ note['_id'] }}">
+                        <div class="note-drag-handle" title="Drag to reorder">⠿</div>
                         {% if note.image_url %}
                             <img src="{{ note.image_url }}" alt="{{ note.title }}" class="note-card-image">
                         {% endif %}
@@ -31,4 +32,25 @@
             </div>
         {% endif %}
     </div>
+    {% if notes %}
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+        <script>
+            const noteGrid = document.querySelector('.note-grid');
+            new Sortable(noteGrid, {
+                animation: 150,
+                handle: '.note-drag-handle',
+                ghostClass: 'note-card-ghost',
+                onEnd: function () {
+                    const order = Array.from(noteGrid.children).map(function (el) {
+                        return el.dataset.id;
+                    });
+                    fetch('{{ url_for("reorder") }}', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ order: order })
+                    });
+                }
+            });
+        </script>
+    {% endif %}
 {% endblock %}

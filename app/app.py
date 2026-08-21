@@ -3,7 +3,7 @@ import uuid
 import boto3
 from botocore.exceptions import ClientError
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 import logging
 import os
 
@@ -93,9 +93,21 @@ def get_existing_notes():
             '_id': note['id'],
             'image_url': get_image_url(note.get('image_key')),
             'color': note.get('color', 'default'),
+            'position': note.get('position'),
         })
 
-    notes.sort(key=lambda n: n['created_at'] if n['created_at'] != 'N/A' else datetime.min, reverse=True)
+    # Manually-set position (an integer assigned by /reorder) always wins.
+    # Notes that have never been dragged sort by -created_at instead, so
+    # they default to newest-first and always land ahead of any explicitly
+    # positioned note (0, 1, 2, ... are never as negative as a real epoch
+    # timestamp) — a brand new note appears at the top until the user drags
+    # it somewhere else.
+    def sort_key(n):
+        if n['position'] is not None:
+            return n['position']
+        return -n['created_at'].timestamp() if n['created_at'] != 'N/A' else 0
+
+    notes.sort(key=sort_key)
     return notes
 
 
@@ -146,6 +158,30 @@ def create():
 
             return redirect(url_for('main'), code=302)
     return render_template('create.html')
+
+
+# reorder route+fun
+@app.route('/reorder', methods=['POST'])
+def reorder():
+    data = request.get_json(silent=True) or {}
+    order = data.get('order', [])
+    if not isinstance(order, list):
+        return jsonify({'status': 'error'}), 400
+
+    for index, note_id in enumerate(order):
+        if not isinstance(note_id, str):
+            continue
+        try:
+            table.update_item(
+                Key={'id': note_id},
+                UpdateExpression='SET #position = :position',
+                ExpressionAttributeNames={'#position': 'position'},
+                ExpressionAttributeValues={':position': index}
+            )
+        except ClientError as e:
+            logging.error(f'Error occurred while reordering note "{note_id}": {e}')
+
+    return jsonify({'status': 'ok'})
 
 
 # read route+fun
