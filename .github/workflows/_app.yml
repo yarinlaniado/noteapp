@@ -13,7 +13,7 @@ jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -101,7 +101,7 @@ jobs:
       # gitops/, so ArgoCD just keeps whatever was last known-good.
 
       - name: Checkout main for gitops write
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
           path: main-checkout

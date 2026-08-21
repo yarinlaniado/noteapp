@@ -140,6 +140,18 @@ resource "aws_iam_role_policy" "gha_terraform" {
         Resource = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/noteapp-*", "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/*"]
       },
       {
+        # EKS (and other AWS services) validate whether their own
+        # service-linked roles already exist as part of resource creation
+        # (e.g. creating a node group checks AWSServiceRoleForAmazonEKSNodegroup)
+        # — that's a GetRole call against an AWS-owned role, which the
+        # noteapp-*-scoped statement above deliberately doesn't cover. This is
+        # read-only and confined to AWS's own service-role path, not "our" roles.
+        Sid      = "ReadAwsServiceLinkedRoles"
+        Effect   = "Allow"
+        Action   = "iam:GetRole"
+        Resource = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/*"
+      },
+      {
         Sid       = "PassClusterAndNodeRoles"
         Effect    = "Allow"
         Action    = "iam:PassRole"
@@ -165,9 +177,12 @@ resource "aws_iam_role_policy" "gha_terraform" {
         Resource = ["arn:aws:s3:::noteapp-images*", "arn:aws:s3:::noteapp-images*/*"]
       },
       {
+        # GetResourcePolicy is required even though no resource policy is
+        # ever set on this secret: the provider reads it back unconditionally
+        # after create/update to fully populate resource state.
         Sid      = "SecretsManage"
         Effect   = "Allow"
-        Action   = ["secretsmanager:CreateSecret", "secretsmanager:DescribeSecret", "secretsmanager:DeleteSecret", "secretsmanager:TagResource"]
+        Action   = ["secretsmanager:CreateSecret", "secretsmanager:DescribeSecret", "secretsmanager:DeleteSecret", "secretsmanager:TagResource", "secretsmanager:GetResourcePolicy"]
         Resource = "arn:aws:secretsmanager:eu-north-1:${data.aws_caller_identity.current.account_id}:secret:noteapp/*"
       },
     ]
