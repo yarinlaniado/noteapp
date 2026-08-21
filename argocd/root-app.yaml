@@ -1,0 +1,30 @@
+# The one manifest applied directly (via terraform/eks's null_resource, see
+# argocd.tf). Everything else under argocd/ — projects, the static main
+# Application, the ephemeral-envs ApplicationSet, monitoring, the TTL cleanup
+# job — cascades from ArgoCD syncing this directory. No further manual
+# kubectl/terraform steps are needed after this one bootstrap.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: noteapp-root
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/yarinlaniado/noteapp.git
+    targetRevision: main
+    path: argocd
+    directory:
+      recurse: true
+      exclude: "root-app.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

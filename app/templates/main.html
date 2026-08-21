@@ -1,30 +1,34 @@
 {% extends "layout.html" %}
 {% block body %}
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col">
-                <div class="note-list">
-                    {% if notes %}
-                        {% for note in notes %}
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ note.title }}</h5>
-                                    <p class="card-text">{{ note.content }}</p>
-                                    <p class="card-text">ID: {{ note['_id'] }}</p>
-                                    <p class="card-text">Created At: {{ note.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-                                    <div class="text-center">
-                                        <a href="{{ url_for('read', id=note['_id']) }}" class="btn btn-secondary mr-2">View</a>
-                                        <a href="{{ url_for('update', id=note['_id']) }}" class="btn btn-warning mr-2">Edit</a>
-                                        <a href="{{ url_for('delete', id=note['_id']) }}" class="btn btn-danger">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p class="text-center">You don't have any notes yet. <a href="{{ url_for('create') }}" class="btn btn-primary">Create one now</a></p>
-                    {% endif %}
-                </div>
+    <div class="container mt-4 mb-5">
+        {% if notes %}
+            <div class="note-grid">
+                {% for note in notes %}
+                    <div class="note-card">
+                        {% if note.image_url %}
+                            <img src="{{ note.image_url }}" alt="{{ note.title }}" class="note-card-image">
+                        {% endif %}
+                        <div class="note-title">{{ note.title }}</div>
+                        <div class="note-content">{{ note.content }}</div>
+                        <div class="note-meta">
+                            <code>{{ note['_id'] }}</code><br>
+                            {{ note.created_at.strftime('%Y-%m-%d %H:%M:%S') if note.created_at != 'N/A' else 'N/A' }}
+                        </div>
+                        <div class="note-actions">
+                            <a href="{{ url_for('read', id=note['_id']) }}" class="btn btn-view">View</a>
+                            <a href="{{ url_for('update', id=note['_id']) }}" class="btn btn-edit">Edit</a>
+                            <a href="{{ url_for('delete', id=note['_id']) }}" class="btn btn-delete">Delete</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h5>You don't have any notes yet</h5>
+                <p>Start by writing down your first thought.</p>
+                <a href="{{ url_for('create') }}" class="btn">Create one now</a>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

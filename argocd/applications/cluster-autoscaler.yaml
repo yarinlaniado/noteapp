@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: noteapp-cluster-autoscaler
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: main
+  source:
+    repoURL: https://kubernetes.github.io/autoscaler
+    chart: cluster-autoscaler
+    targetRevision: "9.51.0" # appVersion 1.33.x — matched to the cluster's Kubernetes version
+    helm:
+      values: |
+        autoDiscovery:
+          clusterName: noteapp
+        awsRegion: eu-north-1
+        rbac:
+          serviceAccount:
+            create: true
+            name: cluster-autoscaler
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::686062433938:role/noteapp-cluster-autoscaler
+        extraArgs:
+          skip-nodes-with-local-storage: false
+          balance-similar-node-groups: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

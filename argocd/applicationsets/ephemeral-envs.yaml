@@ -1,0 +1,50 @@
+# CI's only interaction with the cluster is writing/removing a directory
+# under gitops/envs/ on `main` — this generator turns each such directory
+# into a real Application. Fixed at revision: main since the git directory
+# generator scans one fixed revision, not across branches (CI commits the
+# gitops file to main regardless of which branch triggered the build, for
+# exactly this reason).
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: noteapp-ephemeral-envs
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/yarinlaniado/noteapp.git
+        revision: main
+        directories:
+          - path: gitops/envs/*
+  template:
+    metadata:
+      name: "env-{{path.basename}}"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+        # Required for cascade-delete: without this, deleting the Application
+        # (via the TTL CronJob or branch-cleanup removing this directory)
+        # would NOT delete the namespace/deployment it created — it would
+        # just orphan them.
+    spec:
+      project: ephemeral-envs
+      sources:
+        - repoURL: https://github.com/yarinlaniado/noteapp.git
+          targetRevision: main
+          path: helm/application/noteapp
+          helm:
+            valueFiles:
+              - values.yaml
+              - "$values/gitops/envs/{{path.basename}}/values.yaml"
+        - repoURL: https://github.com/yarinlaniado/noteapp.git
+          targetRevision: main
+          path: "gitops/envs/{{path.basename}}"
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{path.basename}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

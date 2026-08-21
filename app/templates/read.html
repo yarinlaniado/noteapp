@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-    <h1>{{ title }}</h1>
-    <p>{{ content }}</p>
-    <a href="{{ url_for('main') }}" class="btn btn-secondary">Back to Main</a>
+    <div class="container">
+        <div class="content-card note-detail">
+            <a href="{{ url_for('main') }}" class="back-link">&larr; Back to Notes</a>
+            <h1>{{ title }}</h1>
+            {% if image_url %}
+                <img src="{{ image_url }}" alt="{{ title }}" class="note-detail-image">
+            {% endif %}
+            <p class="note-detail-content">{{ content }}</p>
+        </div>
+    </div>
 {% endblock %}

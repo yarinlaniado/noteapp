@@ -1,11 +1,32 @@
 {% extends "layout.html" %}
 {% block body %}
-    <h1>Update Note - {{ title }}</h1>
-    <form method="POST">
-        <textarea name="content" rows="10" cols="40">{{ content }}</textarea><br>
-        <input type="submit" value="Save Changes">
-    </form>
-    <a href="{{ url_for('main') }}" class="btn btn-secondary">Back to Main</a>
-
+    <div class="container">
+        <div class="content-card">
+            <a href="{{ url_for('main') }}" class="back-link">&larr; Back to Notes</a>
+            <h1>Update Note &mdash; {{ title }}</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {% if image_url %}
+                <img src="{{ image_url }}" alt="Note image" class="note-detail-image">
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" class="form-control" rows="10">{{ content }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">{{ 'Replace image (optional)' if image_url else 'Image (optional)' }}</label>
+                    <input type="file" id="image" name="image" class="form-control-file" accept="image/png,image/jpeg,image/gif,image/webp">
+                </div>
+                <button type="submit" class="btn btn-primary-app">Save Changes</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
-

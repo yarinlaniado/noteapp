@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitops-ttl-cleanup-script
+  namespace: {{ .Release.Namespace }}
+data:
+  cleanup.sh: |
+    #!/bin/sh
+    set -eu
+
+    apk add --no-cache coreutils >/dev/null
+
+    TOKEN=$(cat /secrets/token)
+    REPO_URL="https://x-access-token:${TOKEN}@{{ .Values.repoUrl }}"
+
+    WORKDIR=$(mktemp -d)
+    cd "$WORKDIR"
+
+    attempt=0
+    max_attempts=5
+    while [ "$attempt" -lt "$max_attempts" ]; do
+      attempt=$((attempt + 1))
+      rm -rf repo
+      git clone --quiet --depth 1 --branch main "$REPO_URL" repo
+      cd repo
+      git config user.name "noteapp-ttl-cleanup"
+      git config user.email "noteapp-ttl-cleanup@users.noreply.github.com"
+
+      changed=0
+      now_epoch=$(date -u +%s)
+
+      if [ -d gitops/envs ]; then
+        for envdir in gitops/envs/*/; do
+          [ -d "$envdir" ] || continue
+          valuesfile="${envdir}values.yaml"
+          [ -f "$valuesfile" ] || continue
+
+          created_at=$(grep -E '^createdAt:' "$valuesfile" | head -1 | sed -E 's/^createdAt:[[:space:]]*"?([^"]*)"?/\1/')
+          ttl_hours=$(grep -E '^ttlHours:' "$valuesfile" | head -1 | sed -E 's/^ttlHours:[[:space:]]*//')
+          ttl_hours=${ttl_hours:-24}
+
+          [ -n "$created_at" ] || continue
+
+          created_epoch=$(date -u -d "$created_at" +%s 2>/dev/null) || { echo "skip $envdir: unparseable createdAt '$created_at'"; continue; }
+          age_hours=$(( (now_epoch - created_epoch) / 3600 ))
+
+          if [ "$age_hours" -ge "$ttl_hours" ]; then
+            echo "expiring $envdir (age ${age_hours}h >= ttl ${ttl_hours}h)"
+            git rm -r --quiet "$envdir"
+            changed=1
+          fi
+        done
+      fi
+
+      if [ "$changed" -eq 0 ]; then
+        echo "nothing to clean up"
+        exit 0
+      fi
+
+      git commit --quiet -m "chore: TTL cleanup of expired ephemeral environments"
+      if git push --quiet origin main; then
+        echo "pushed cleanup commit"
+        exit 0
+      fi
+
+      echo "push rejected (concurrent writer), retrying (attempt $attempt/$max_attempts)"
+      cd "$WORKDIR"
+      sleep $((attempt * 3))
+    done
+
+    echo "gave up after $max_attempts attempts" >&2
+    exit 1

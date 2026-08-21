@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 class TestMyFlaskApp(unittest.TestCase):
     def setUp(self):
-        self.base_url = 'http://localhost:8080'
+        self.base_url = 'http://localhost:8081'
         self.creation_time = None
 
     def test_app_is_up(self):
@@ -21,11 +21,11 @@ class TestMyFlaskApp(unittest.TestCase):
 
         soup = BeautifulSoup(response.content, 'html.parser')
         note_title = 'try1'
-        note_element = soup.find('h5', {'class': 'card-title'}, text=note_title).parent
+        note_element = soup.find('div', {'class': 'note-title'}, string=note_title).parent
 
-        view_url = note_element.find('a', {'class': 'btn-secondary'})['href']
-        edit_url = note_element.find('a', {'class': 'btn-warning'})['href']
-        delete_url = note_element.find('a', {'class': 'btn-danger'})['href']
+        view_url = note_element.find('a', {'class': 'btn-view'})['href']
+        edit_url = note_element.find('a', {'class': 'btn-edit'})['href']
+        delete_url = note_element.find('a', {'class': 'btn-delete'})['href']
 
         response = requests.get(self.base_url + view_url)
         self.assertEqual(response.status_code, 200)

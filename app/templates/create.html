@@ -1,25 +1,33 @@
 {% extends "layout.html" %}
 {% block body %}
-
-    <h1>Create a New Note</h1>
-    <a href="{{ url_for('main') }}">Back to Notes</a>
-    <form method="POST">
-        <label for="title">Title:</label>
-        <input type="text" name="title" required>
-        <label for="content">Content:</label>
-        <textarea name="content" rows="4" required></textarea>
-        <button type="submit">Create</button>
-    </form>
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class="flash">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+    <div class="container">
+        <div class="content-card">
+            <a href="{{ url_for('main') }}" class="back-link">&larr; Back to Notes</a>
+            <h1>Create a New Note</h1>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Give your note a title" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" class="form-control" rows="6" placeholder="Write your note here..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image (optional)</label>
+                    <input type="file" id="image" name="image" class="form-control-file" accept="image/png,image/jpeg,image/gif,image/webp">
+                </div>
+                <button type="submit" class="btn btn-primary-app">Create Note</button>
+            </form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
     </div>
 {% endblock %}
-

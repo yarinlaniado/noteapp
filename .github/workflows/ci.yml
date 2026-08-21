@@ -1,0 +1,55 @@
+name: CI/CD
+
+on:
+  push:
+    branches: ['**']
+    paths-ignore:
+      - 'gitops/**'
+      - 'version.txt'
+      - '**.md'
+  workflow_dispatch: {} # manual escape hatch to refresh an env without a code change
+
+jobs:
+  detect:
+    uses: ./.github/workflows/_detect-changes.yml
+
+  terraform_app:
+    needs: detect
+    if: needs.detect.outputs.terraform_changed == 'true'
+    uses: ./.github/workflows/_terraform-app.yml
+    permissions:
+      id-token: write
+      contents: read
+
+  # Its own job so `app` (below) can depend on it directly — infra applies
+  # before the app tries to build/deploy against it. On a branch that
+  # doesn't touch terraform/**, this (and terraform_app) is skipped
+  # entirely, not run-and-pass, so `app` proceeds immediately either way.
+  terraform_eks:
+    needs: detect
+    if: needs.detect.outputs.terraform_changed == 'true'
+    uses: ./.github/workflows/_terraform-eks.yml
+    permissions:
+      id-token: write
+      contents: read
+
+  helm_validate:
+    needs: detect
+    if: needs.detect.outputs.helm_changed == 'true'
+    uses: ./.github/workflows/_helm-validate.yml
+
+  # tf first, app last: waits for both terraform jobs to either succeed or
+  # be skipped (not needed) before building/deploying — never runs against
+  # infra that's still mid-apply, and never runs at all if a terraform
+  # apply it depended on actually failed.
+  app:
+    needs: [detect, terraform_app, terraform_eks]
+    if: |
+      always() &&
+      (needs.detect.outputs.app_changed == 'true' || contains(github.event.head_commit.message, 'create-env') || github.event_name == 'workflow_dispatch') &&
+      (needs.terraform_app.result == 'success' || needs.terraform_app.result == 'skipped') &&
+      (needs.terraform_eks.result == 'success' || needs.terraform_eks.result == 'skipped')
+    uses: ./.github/workflows/_app.yml
+    permissions:
+      id-token: write
+      contents: write

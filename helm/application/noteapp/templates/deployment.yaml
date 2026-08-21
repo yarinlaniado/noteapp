@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: noteapp
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: noteapp
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: noteapp
+  template:
+    metadata:
+      labels:
+        app: noteapp
+    spec:
+      serviceAccountName: noteapp
+      containers:
+        - name: noteapp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: AWS_REGION
+              value: {{ .Values.env.awsRegion | quote }}
+            - name: DYNAMODB_TABLE
+              value: {{ .Values.env.dynamodbTable | quote }}
+            - name: S3_BUCKET_NAME
+              value: {{ .Values.env.s3BucketName | quote }}
+            - name: SCRIPT_NAME
+              value: {{ .Values.env.scriptName | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          # Plain "/" is what PrefixMiddleware passes straight through
+          # unmodified (no prefix on this path) — works identically for main
+          # and every ephemeral env with zero per-environment configuration.
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20

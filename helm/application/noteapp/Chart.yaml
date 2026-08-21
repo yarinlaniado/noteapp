@@ -1,0 +1,6 @@
+apiVersion: v2
+name: noteapp
+description: The noteapp Flask application — deployed once per environment (main, or one per active ephemeral branch)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

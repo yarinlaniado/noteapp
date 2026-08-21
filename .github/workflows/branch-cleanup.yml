@@ -1,0 +1,37 @@
+name: Branch cleanup
+
+# Immediate cleanup on branch delete — the TTL CronJob (helm/platform-ttl-cronjob)
+# would eventually catch an orphaned environment too, but there's no reason
+# to wait up to 24h when we already know the branch is gone.
+on:
+  delete:
+
+permissions:
+  contents: write
+
+jobs:
+  remove-gitops-entry:
+    if: github.event.ref_type == 'branch' && github.event.ref != 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Normalize deleted branch name
+        id: vars
+        run: |
+          source scripts/normalize-branch.sh
+          echo "namespace=$(normalize_branch "${{ github.event.ref }}")" >> "$GITHUB_OUTPUT"
+
+      - name: Remove gitops entry if present
+        run: |
+          NS="${{ steps.vars.outputs.namespace }}"
+          if [ -d "gitops/envs/${NS}" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git rm -r --quiet "gitops/envs/${NS}"
+            bash scripts/git-push-retry.sh "chore: remove deleted branch's environment ${NS}"
+          else
+            echo "no active environment for ${NS}, nothing to do"
+          fi

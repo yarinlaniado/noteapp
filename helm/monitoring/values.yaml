@@ -1,0 +1,49 @@
+# Overrides for prometheus-community/kube-prometheus-stack (chart itself is
+# pulled straight from the community repo, not vendored — see
+# argocd/applications/monitoring.yaml).
+
+# EKS doesn't expose these control-plane components to customers — without
+# disabling them, their ServiceMonitors scrape-fail constantly.
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+
+# No alert destination configured yet — an always-on Alertmanager pod adds
+# cost/complexity for zero value until one exists. Cheap to re-enable later.
+alertmanager:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    retention: 5d
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp3
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+grafana:
+  service:
+    type: ClusterIP # no public exposure — kubectl port-forward, same posture as ArgoCD's own UI
+  persistence:
+    enabled: false # fewer PVCs; toggle on later if dashboards need to survive restarts
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi

@@ -1,0 +1,31 @@
+replicaCount: 1
+
+image:
+  repository: 686062433938.dkr.ecr.eu-north-1.amazonaws.com/noteapp
+  tag: "" # always set per-environment via the matching gitops/*/values.yaml
+  pullPolicy: IfNotPresent
+
+env:
+  awsRegion: eu-north-1
+  dynamodbTable: noteapp-notes
+  s3BucketName: noteapp-images-686062433938-eu-north-1
+  scriptName: "" # "" for main; "/env/<namespace>" for ephemeral environments
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 96Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+serviceAccount:
+  # Defaults to the prod-data role; every gitops/envs/*/values.yaml CI writes
+  # overrides this to the app-nonprod role instead (see terraform/eks/irsa.tf
+  # for why the prod role can never be assumed from an ephemeral namespace
+  # regardless of what's configured here — enforced by IAM trust policy).
+  roleArn: "arn:aws:iam::686062433938:role/noteapp-app-prod"
+
+ingress:
+  pathPrefix: "/"
+  groupOrder: "1000" # evaluated last on the shared ALB — main is the catch-all

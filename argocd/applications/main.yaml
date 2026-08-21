@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: noteapp-main
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: main
+  sources:
+    - repoURL: https://github.com/yarinlaniado/noteapp.git
+      targetRevision: main
+      path: helm/application/noteapp
+      helm:
+        valueFiles:
+          - values.yaml
+          - $values/gitops/main/values.yaml
+    - repoURL: https://github.com/yarinlaniado/noteapp.git
+      targetRevision: main
+      path: gitops/main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: noteapp
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

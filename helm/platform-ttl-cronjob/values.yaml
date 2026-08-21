@@ -1,0 +1,13 @@
+schedule: "*/15 * * * *"
+
+repoUrl: github.com/yarinlaniado/noteapp.git
+
+serviceAccount:
+  name: gitops-ttl-cronjob
+  roleArn: "arn:aws:iam::686062433938:role/noteapp-ttl-cronjob"
+
+secretArn: "arn:aws:secretsmanager:eu-north-1:686062433938:secret:noteapp/gitops-bot-token"
+
+images:
+  awsCli: public.ecr.aws/aws-cli/aws-cli:latest
+  gitAlpine: alpine/git:latest

@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gitops-ttl-cleanup
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  concurrencyPolicy: Forbid # no overlapping runs — avoids a class of git-push races entirely
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          serviceAccountName: {{ .Values.serviceAccount.name }}
+          restartPolicy: Never
+          initContainers:
+            - name: fetch-token
+              image: {{ .Values.images.awsCli }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  aws secretsmanager get-secret-value \
+                    --secret-id {{ .Values.secretArn | quote }} \
+                    --query SecretString --output text > /secrets/token
+              volumeMounts:
+                - name: secrets
+                  mountPath: /secrets
+          containers:
+            - name: cleanup
+              image: {{ .Values.images.gitAlpine }}
+              command: ["/bin/sh", "/scripts/cleanup.sh"]
+              volumeMounts:
+                - name: secrets
+                  mountPath: /secrets
+                  readOnly: true
+                - name: script
+                  mountPath: /scripts
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi
+          volumes:
+            - name: secrets
+              emptyDir: {}
+            - name: script
+              configMap:
+                name: gitops-ttl-cleanup-script
+                defaultMode: 0755

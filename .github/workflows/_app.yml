@@ -1,0 +1,132 @@
+name: App
+
+on:
+  workflow_call: {}
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: eu-north-1
+
+      - name: Login to ECR
+        id: ecr_login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Determine branch identity and image tag
+        id: vars
+        env:
+          # Passed as data via env, never interpolated directly into the
+          # script — a commit message is attacker-controlled input and
+          # direct ${{ }} interpolation into `run:` is a script-injection risk.
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          source scripts/normalize-branch.sh
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+
+          if [ "$BRANCH" = "main" ]; then
+            NEW_VERSION=$(bash scripts/bump-version.sh "$COMMIT_MESSAGE")
+            echo "is_main=true" >> "$GITHUB_OUTPUT"
+            echo "tag=${NEW_VERSION}-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          else
+            NORMALIZED=$(normalize_branch "$BRANCH")
+            echo "is_main=false" >> "$GITHUB_OUTPUT"
+            echo "namespace=${NORMALIZED}" >> "$GITHUB_OUTPUT"
+            echo "tag=env-${NORMALIZED}-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit version bump
+        if: steps.vars.outputs.is_main == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          bash scripts/git-push-retry.sh "chore: bump version to $(cat version.txt)" version.txt
+
+      # One tag per version, pointing at the exact commit that landed on
+      # main — whatever commit git-push-retry.sh's rebase loop ultimately
+      # pushed, since `git tag` with no ref defaults to current HEAD.
+      - name: Tag release
+        if: steps.vars.outputs.is_main == 'true'
+        run: |
+          TAG="v$(cat version.txt)"
+          git tag "$TAG"
+          git push origin "$TAG"
+
+      - name: Build and push image
+        env:
+          IMAGE: ${{ steps.ecr_login.outputs.registry }}/noteapp:${{ steps.vars.outputs.tag }}
+        run: |
+          docker build -t "$IMAGE" .
+          docker push "$IMAGE"
+
+      # Ephemeral envs get their own isolated data store — a broken branch
+      # can never touch real production notes (see terraform/app/main.tf and
+      # terraform/eks/irsa.tf for the isolation mechanism).
+      - name: Run integration tests against the built image
+        env:
+          DYNAMODB_TABLE: ${{ steps.vars.outputs.is_main == 'true' && 'noteapp-notes' || 'noteapp-notes-nonprod' }}
+          S3_BUCKET_NAME: ${{ steps.vars.outputs.is_main == 'true' && 'noteapp-images-686062433938-eu-north-1' || 'noteapp-images-nonprod-686062433938-eu-north-1' }}
+        run: |
+          docker compose up -d --build
+          sleep 3
+          python3 -m pip install --quiet requests beautifulsoup4
+          python3 app/test.py
+          docker compose down
+
+      # Everything past this point only runs on test success (no
+      # continue-on-error above) — a failed build/test never touches
+      # gitops/, so ArgoCD just keeps whatever was last known-good.
+
+      - name: Checkout main for gitops write
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-checkout
+
+      - name: Write gitops config (main)
+        if: steps.vars.outputs.is_main == 'true'
+        working-directory: main-checkout
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p gitops/main
+          cat > gitops/main/values.yaml <<EOF
+          image:
+            tag: ${{ steps.vars.outputs.tag }}
+          EOF
+          bash scripts/git-push-retry.sh "chore: deploy main ${{ steps.vars.outputs.tag }}" gitops/main/values.yaml
+
+      # Idempotent whether this is the first create-env or a refresh of an
+      # already-active environment — same write either way, createdAt always
+      # resets to now (sliding 24h TTL, refreshed on every push).
+      - name: Write gitops config (ephemeral environment)
+        if: steps.vars.outputs.is_main == 'false'
+        working-directory: main-checkout
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          NS="${{ steps.vars.outputs.namespace }}"
+          mkdir -p "gitops/envs/${NS}"
+          cat > "gitops/envs/${NS}/values.yaml" <<EOF
+          image:
+            tag: ${{ steps.vars.outputs.tag }}
+          env:
+            scriptName: /env/${NS}
+            dynamodbTable: noteapp-notes-nonprod
+            s3BucketName: noteapp-images-nonprod-686062433938-eu-north-1
+          serviceAccount:
+            roleArn: arn:aws:iam::686062433938:role/noteapp-app-nonprod
+          ingress:
+            pathPrefix: /env/${NS}
+            groupOrder: "100"
+          createdAt: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          ttlHours: 24
+          EOF
+          bash scripts/git-push-retry.sh "chore: deploy ${NS} ${{ steps.vars.outputs.tag }}" "gitops/envs/${NS}/values.yaml"

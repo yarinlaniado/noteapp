@@ -1,0 +1,36 @@
+name: Detect changes
+
+on:
+  workflow_call:
+    outputs:
+      app_changed:
+        value: ${{ jobs.detect.outputs.app_changed }}
+      terraform_changed:
+        value: ${{ jobs.detect.outputs.terraform_changed }}
+      helm_changed:
+        value: ${{ jobs.detect.outputs.helm_changed }}
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      app_changed: ${{ steps.filter.outputs.app }}
+      terraform_changed: ${{ steps.filter.outputs.terraform }}
+      helm_changed: ${{ steps.filter.outputs.helm }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            app:
+              - 'app/**'
+              - 'Dockerfile'
+              - 'requirements.txt'
+              - 'docker-compose.yml'
+            terraform:
+              - 'terraform/app/**'
+              - 'terraform/eks/**'
+            helm:
+              - 'helm/**'
+              - 'argocd/**'

@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ephemeral-envs
+  namespace: argocd
+spec:
+  sourceRepos:
+    - https://github.com/yarinlaniado/noteapp.git
+  destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+  # Empty and deliberate: ephemeral-env Applications can create/manage only
+  # namespaced resources, never anything cluster-scoped — a broken or
+  # malicious branch deploy is contained to its own namespace.

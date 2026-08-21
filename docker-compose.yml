@@ -1,26 +1,22 @@
-#mongodb://note:note@localhost:27017
-version: '3'
 services:
   app:
     build:
       context: .
     image: yarinlaniado/noteapp
     ports:
-      - "8080:8000"
-    depends_on:
-      - mongodb
-    links:
-      - mongodb 
-  mongodb:
-    image: yarinlaniado/mongo:1.0
-    container_name: my-mongodb-container
-    ports:
-      - "27017:27017"
+      - "8081:8000"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: note
-      MONGO_INITDB_ROOT_PASSWORD: note
+      # Defaults match production for local dev. CI (app.yml) overrides
+      # DYNAMODB_TABLE/S3_BUCKET_NAME to the non-prod store before running
+      # app/test.py, and passes through its OIDC-derived AWS_* credentials
+      # (empty-defaulted here so plain local dev, which relies on the
+      # mounted ~/.aws below, is unaffected).
+      AWS_REGION: ${AWS_REGION:-eu-north-1}
+      DYNAMODB_TABLE: ${DYNAMODB_TABLE:-noteapp-notes}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME:-noteapp-images-686062433938-eu-north-1}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN:-}
     volumes:
-      - mongodb-data:/data/db
-    
-volumes:
-  mongodb-data:
+      # Reuses your local AWS CLI credentials for local dev instead of baking secrets into the image.
+      - ${HOME}/.aws:/root/.aws:ro

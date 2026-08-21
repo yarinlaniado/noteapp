@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Notes App</title>
     <!-- Include Bootstrap via a Content Delivery Network (CDN) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-    <header class="bg-primary text-white p-4">
-        <div class="container align-center">
-            <h1 >Notes</h1>
-            <a href="{{ url_for('create') }}" class="btn btn-success">Create a New Note</a>
+    <header class="app-header">
+        <div class="container header-inner">
+            <div class="brand">
+                <span class="brand-icon">🗒️</span>
+                <div>
+                    <h1>Notes</h1>
+                    <p class="tagline">Capture ideas before they slip away.</p>
+                </div>
+            </div>
+            <a href="{{ url_for('create') }}" class="btn btn-create">+ Create a New Note</a>
         </div>
     </header>
-{% block body %}
-{% endblock %}
+    <main>
+    {% block body %}
+    {% endblock %}
+    </main>
+    <footer class="app-footer">
+        Notes App
+    </footer>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

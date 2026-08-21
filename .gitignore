@@ -6,6 +6,8 @@ __pycache__/
 
 # C extensions
 *.so
+.omc/
+
 
 # Distribution / packaging
 bin/
@@ -50,4 +52,16 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: noteapp-ttl-cleanup
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: main
+  source:
+    repoURL: https://github.com/yarinlaniado/noteapp.git
+    targetRevision: main
+    path: helm/platform-ttl-cronjob
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform-jobs
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

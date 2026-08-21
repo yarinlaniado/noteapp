@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: main
+  namespace: argocd
+spec:
+  sourceRepos:
+    - https://github.com/yarinlaniado/noteapp.git
+    - https://prometheus-community.github.io/helm-charts
+    - https://kubernetes.github.io/autoscaler
+  destinations:
+    - namespace: noteapp
+      server: https://kubernetes.default.svc
+    - namespace: monitoring
+      server: https://kubernetes.default.svc
+    - namespace: platform-jobs
+      server: https://kubernetes.default.svc
+    - namespace: kube-system # cluster-autoscaler only — the LB controller is Terraform-bootstrapped, not ArgoCD-managed
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+  # Empty on purpose: `syncOptions: CreateNamespace=true` on each Application
+  # pre-creates its destination namespace without needing it whitelisted here
+  # — this whitelist governs cluster-scoped resources an Application *owns*,
+  # which none of these apps do.

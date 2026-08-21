@@ -1,0 +1,36 @@
+name: Terraform (app data)
+
+on:
+  workflow_call: {}
+
+jobs:
+  plan-apply:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.7"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_TERRAFORM_ROLE_ARN }}
+          aws-region: eu-north-1
+
+      - run: terraform fmt -check -diff
+      - run: terraform init
+      - run: terraform validate
+
+      - name: Plan
+        run: terraform plan -no-color -input=false
+
+      # Small, cheap, already-applied stack — no approval gate (unlike
+      # terraform/eks, see _terraform-eks.yml).
+      - name: Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve -input=false
