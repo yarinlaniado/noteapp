@@ -62,18 +62,25 @@ resource "aws_iam_openid_connect_provider" "eks" {
 # automatically via bootstrap_cluster_creator_admin_permissions above, since
 # they run the first apply, but that grant is tied to whoever creates the
 # cluster, not to this role generally.
-data "aws_iam_role" "gha_terraform" {
-  name = "gha-noteapp-terraform"
+#
+# ARN is constructed directly rather than looked up via data.aws_iam_role:
+# that role's own IAM policy only grants iam:GetRole on "noteapp-*"-named
+# roles (see terraform/bootstrap/github-oidc.tf), and "gha-noteapp-terraform"
+# doesn't match that pattern — a live lookup would need iam:GetRole on
+# itself, which is both a permissions gap and an unnecessary runtime
+# dependency when the ARN is fully deterministic from the account ID alone.
+locals {
+  gha_terraform_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/gha-noteapp-terraform"
 }
 
 resource "aws_eks_access_entry" "gha_terraform" {
   cluster_name  = aws_eks_cluster.this.name
-  principal_arn = data.aws_iam_role.gha_terraform.arn
+  principal_arn = local.gha_terraform_role_arn
 }
 
 resource "aws_eks_access_policy_association" "gha_terraform_admin" {
   cluster_name  = aws_eks_cluster.this.name
-  principal_arn = data.aws_iam_role.gha_terraform.arn
+  principal_arn = local.gha_terraform_role_arn
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 
   access_scope {
