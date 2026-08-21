@@ -7,7 +7,13 @@ on:
       - 'gitops/**'
       - 'version.txt'
       - '**.md'
-  workflow_dispatch: {} # manual escape hatch to refresh an env without a code change
+  workflow_dispatch: # manual escape hatch to refresh an env, or force a version bump, without a code change
+    inputs:
+      version_bump:
+        description: "Version bump level (main branch only — ignored for ephemeral envs)"
+        type: choice
+        options: [patch, minor, major]
+        default: patch
 
 jobs:
   detect:
@@ -50,6 +56,8 @@ jobs:
       (needs.terraform_app.result == 'success' || needs.terraform_app.result == 'skipped') &&
       (needs.terraform_eks.result == 'success' || needs.terraform_eks.result == 'skipped')
     uses: ./.github/workflows/_app.yml
+    with:
+      version_bump: ${{ inputs.version_bump || 'patch' }}
     permissions:
       id-token: write
       contents: write

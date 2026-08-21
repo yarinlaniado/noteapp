@@ -1,7 +1,13 @@
 name: App
 
 on:
-  workflow_call: {}
+  workflow_call:
+    inputs:
+      version_bump:
+        description: "patch/minor/major — only used on main; empty behaves as patch"
+        type: string
+        required: false
+        default: ""
 
 jobs:
   build-test-deploy:
@@ -26,13 +32,23 @@ jobs:
           # script — a commit message is attacker-controlled input and
           # direct ${{ }} interpolation into `run:` is a script-injection risk.
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          # Empty on a push (no dispatch input exists); on a manual
+          # workflow_dispatch there's no commit message at all, so this is
+          # the only way to signal "bump major/minor" from the UI.
+          DISPATCH_VERSION_BUMP: ${{ inputs.version_bump }}
         run: |
           source scripts/normalize-branch.sh
           BRANCH="${GITHUB_REF#refs/heads/}"
           SHORT_SHA="${GITHUB_SHA:0:7}"
 
+          EFFECTIVE_MESSAGE="$COMMIT_MESSAGE"
+          case "$DISPATCH_VERSION_BUMP" in
+            major) EFFECTIVE_MESSAGE="[MAJOR] $EFFECTIVE_MESSAGE" ;;
+            minor) EFFECTIVE_MESSAGE="[MINOR] $EFFECTIVE_MESSAGE" ;;
+          esac
+
           if [ "$BRANCH" = "main" ]; then
-            NEW_VERSION=$(bash scripts/bump-version.sh "$COMMIT_MESSAGE")
+            NEW_VERSION=$(bash scripts/bump-version.sh "$EFFECTIVE_MESSAGE")
             echo "is_main=true" >> "$GITHUB_OUTPUT"
             echo "tag=${NEW_VERSION}-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
           else
